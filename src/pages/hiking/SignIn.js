@@ -23,7 +23,7 @@ const ColorButton1 = withStyles((theme) => ({
   root: {
     backgroundColor: "#ffffff",
     letterSpacing: 1.6,
-    color: "#000000",
+    color: "#000000",    
     // fullWidth: true,
   },
 }))(Button);
@@ -45,21 +45,10 @@ const ColorButton3 = withStyles((theme) => ({
   },
 }))(Button);
 
-
-const theme = createMuiTheme({
-  typography:{
-    button:{
-      fontSize: "16px",
-    }
-  },
-})
-
-
 export default function ImgMediaCard() {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme = {theme}>
       <Card className={classes.root} style={{backgroundColor: "white"}}>
         <CardActionArea>
           <CardMedia
@@ -69,11 +58,11 @@ export default function ImgMediaCard() {
             image="/asset/images/sample.jpg"  /*圖片只能放在public底下，而且路徑不需要寫public和../ */ 
             title="Sign-in background img"
           />
-        </CardActionArea>
+        
         <CardActions>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} direction="column" justifyContent = "center" alignItems = "center" >
             <Grid item xs = {12}>
-              <ColorButton1 variant = "contained"   startIcon={<AndroidIcon style={{color: "#000000"}}/>}>
+              <ColorButton1 variant = "contained" startIcon={<AndroidIcon style={{color: "#00d04c"}}/>}>
                 透過Google登入
               </ColorButton1>
             </Grid>
@@ -92,21 +81,20 @@ export default function ImgMediaCard() {
                 透過Email登入
               </ColorButton1>
             </Grid>
-            
           </Grid>
         </CardActions>
-        <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              還不是會員嗎?
-            </Typography>
-            <Typography variant="body2" component="p">
-              註冊新帳號
-            </Typography>
-            <Button variant = "outlined" style={{color: "#00d04c", borderColor: "#00d04c"}}>
-              直接使用
-            </Button>
-        </CardContent>
+          <CardContent >
+              <div variant="body2" component="p" style={{color: "black", direction: "column", alignItems: "center"}}>
+                還不是會員嗎?
+              </div>
+              <Typography variant="body2" component="p" style={{color: "black"}}>
+                註冊新帳號
+              </Typography>
+              <Button variant = "outlined" style={{color: "#00d04c", borderColor: "#00d04c"}}>
+                直接使用
+              </Button>
+          </CardContent>
+          </CardActionArea>
       </Card>
-    </ThemeProvider>
   );
 }
