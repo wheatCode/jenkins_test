@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TuneIcon from "@material-ui/icons/Tune";
 import { IconButton } from "@material-ui/core";
 import Item from "./Item";
-import "./sidebar.scss";
+import "./sidebar.module.scss";
 
 const useStyles = makeStyles({
   list: {
