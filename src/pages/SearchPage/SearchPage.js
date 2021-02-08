@@ -1,15 +1,22 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,createMuiTheme,ThemeProvider  } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import TitleBar from "../../components/TopBar/TitleBar";
 import CollectionList from '../../components/Lists/CollectionList';
 import Navigation from "../../components/Bottom/Navigation";
 import axios from "axios";
+import Container from '@material-ui/core/Container';
+
+const lightTheme = createMuiTheme({
+    palette: {
+      type: 'light',
+    },
+  });
 
 const useStyles = makeStyles((theme) => ({
-    searchSetting: {
-        padding: "0 5%",
+    root: {
+        flexGrow:1,
     },
     quitSearchText: {
         fontFamily: "NotoSansCJKtc",
@@ -48,16 +55,20 @@ function SearchPage() {
 
     return (
         <>
+            <div className={classes.root}>
+            <ThemeProvider theme={lightTheme}>
             <TitleBar title="步道搜尋" />
-            <div className={classes.searchSetting}>
+            <Container maxWidth="sm">
                 <SearchBar />
                 <div className={classes.quitSearchText}>快速搜尋</div>
+
                 <Grid container spacing={2}>
                     <CollectionList data={searchResult}></CollectionList>
                 </Grid>
-            </div>
-
+            </Container>
             <Navigation />
+            </ThemeProvider>
+            </div>
         </>
     )
 }
