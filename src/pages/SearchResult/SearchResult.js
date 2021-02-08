@@ -67,7 +67,7 @@ function SearchResult(props) {
         spacing={1}
       >
         <Grid item xs={12}>
-          <Link to="/">
+          <Link to="/searchPage">
             <BackArrow />
           </Link>
         </Grid>
