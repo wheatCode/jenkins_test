@@ -4,7 +4,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import TuneIcon from "@material-ui/icons/Tune";
 import { IconButton } from "@material-ui/core";
-import Item from "./Item";
+import Item from "./Item.js";
 import "./sidebar.scoped.scss";
 
 const useStyles = makeStyles({

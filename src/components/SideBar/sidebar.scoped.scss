@@ -55,6 +55,27 @@ $font-family: NotoSansCJKtc;
     padding-right: 16px;
   }
 
+  &__btns /deep/ {
+    .showDisplaymMoreBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #919191;
+      margin: 14px 0px 0px 0px;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+
+      span {
+        padding: 0;
+      }
+    }
+  }
+
   &__marks {
     padding-right: 24px;
   }
@@ -74,7 +95,7 @@ $font-family: NotoSansCJKtc;
 }
 
 .btn {
-  &-gray {
+  &-gray /deep/ {
     .MuiButton {
       &-root {
         @include muiButton-root;
@@ -108,7 +129,7 @@ $font-family: NotoSansCJKtc;
     }
   }
 
-  &-outline-success {
+  &-outline-success /deep/ {
     .MuiButton {
       &-root {
         @include muiButton-root;
@@ -133,7 +154,7 @@ $font-family: NotoSansCJKtc;
     }
   }
 
-  &-success {
+  &-success /deep/ {
     .MuiButton {
       &-root {
         @include muiButton-root;
@@ -159,7 +180,7 @@ $font-family: NotoSansCJKtc;
   }
 }
 
-.slider {
+.slider /deep/ {
   margin: 8px 0px 0px 0px;
 
   .MuiSlider {
@@ -202,28 +223,12 @@ $font-family: NotoSansCJKtc;
   }
 }
 
-.showDisplaymMoreBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #919191;
-  margin: 14px 0px 0px 0px;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-
-  span {
-    padding: 0;
-  }
-}
-
-.MuiDrawer-paper {
-  overflow-y: overlay !important;
-}
+// #root /deep/ {
+//   .MuiDrawer-paper {
+//     overflow-y: overlay !important;
+//     background: #000;
+//   }
+// }
 
 hr {
   margin: 0;
