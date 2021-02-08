@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Slider from "@material-ui/core/Slider";
 import Icon from "@material-ui/core/Icon";
 import "font-awesome/css/font-awesome.min.css";
+import "./sidebar.scoped.scss";
 
 export default function Item(props) {
   const { titleL, titleR, marks, btns, btns_num, reset } = props;
