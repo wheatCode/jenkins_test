@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Slider from "@material-ui/core/Slider";
 import Icon from "@material-ui/core/Icon";
+import "./sidebar.scoped.scss";
 import "font-awesome/css/font-awesome.min.css";
 
 export default function Item(props) {

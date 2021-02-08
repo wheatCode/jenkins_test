@@ -4,8 +4,8 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import TuneIcon from "@material-ui/icons/Tune";
 import { IconButton } from "@material-ui/core";
-import Item from "./Item";
-import "./sidebar.scss";
+import Item from "./Item.js";
+import "./sidebar.scoped.scss";
 
 const useStyles = makeStyles({
   list: {
@@ -100,6 +100,7 @@ export default function Sidebar(props) {
   useEffect(() => {
     (async () => {
       const { data } = await axios.get("api/collection");
+      console.log(data, 1);
       setThemeArray(
         data.map((item) => {
           return { value: item.id, title: item.name };
