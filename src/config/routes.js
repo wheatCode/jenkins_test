@@ -31,6 +31,8 @@ const routes = [
   <UnauthorizedRoute path="/searchPage" exact component={SearchPage} />,
   <UnauthorizedRoute path="/searchResult" exact component={SearchResult} />,
   <Route path="/about" exact component={About} />,
+  <Route path="/searchPage" exact component={SearchPage} />,
+  <Route path="/searchResult" exact component={SearchResult} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   <AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
