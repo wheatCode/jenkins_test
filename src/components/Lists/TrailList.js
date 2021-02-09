@@ -66,7 +66,7 @@ const TrailList = (props) => {
                 {trail.title}
               </Grid>
               <Grid item xs={12} className={classes.location}>
-                {trail.location.countie.name+trail.location.name}
+                {trail.location.county.name+trail.location.name}
               </Grid>
               <Grid item xs={12} className={classes.distance}>
                 全程約{trail.distance}公里
