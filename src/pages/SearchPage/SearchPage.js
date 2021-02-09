@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     quitSearchText: {
         fontFamily: "NotoSansCJKtc",
+        fontWeight:'bold',
         width: "100%",
         textAlign: "left",
         lineHeight: "56px",
