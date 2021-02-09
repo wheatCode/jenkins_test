@@ -1,17 +1,14 @@
 
 import React, { Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import {Link} from 'react-router-dom';
-const useStyles = makeStyles((theme) => ({
 
-   
-   
+const useStyles = makeStyles((theme) => ({
   footer:{
     boxShadow:" 0 0 3px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor:"white",
@@ -19,16 +16,9 @@ const useStyles = makeStyles((theme) => ({
     bottom:0,
     left:0,
     width:"100%",
-   
     fontFamily:"NotoSansCJKtc",
-  },
-
-   
+  }, 
 }));
-
-
-
-
 
 function Navigation() {
   
@@ -38,10 +28,7 @@ function Navigation() {
   return(
     
     <Fragment>
-      
-     
-
-    <div className={classes.bottom}>    
+    <div className={classes.bottom}>
     <BottomNavigation
      value={value} 
      onChange={(event, newValue) => {
@@ -56,10 +43,9 @@ function Navigation() {
       <BottomNavigationAction label="附近步道"  icon={<LocationOnIcon />} />
       <BottomNavigationAction label="我的最愛"  icon={<FavoriteIcon  />} />
     
-    </BottomNavigation>  
+    </BottomNavigation>
     </div>
   </Fragment>
   );
-  
 }
 export default Navigation;
