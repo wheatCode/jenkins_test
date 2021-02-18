@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { makeStyles,createMuiTheme,ThemeProvider  } from "@material-ui/core/styles";
+import { makeStyles,createMuiTheme,ThemeProvider } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import TitleBar from "../../components/TopBar/TitleBar";
@@ -11,6 +11,9 @@ import Container from '@material-ui/core/Container';
 const lightTheme = createMuiTheme({
     palette: {
       type: 'light',
+      primary:{
+        main:'#00d04c',
+      },
     },
   });
 
@@ -20,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     quitSearchText: {
         fontFamily: "NotoSansCJKtc",
+        fontWeight:'bold',
         width: "100%",
         textAlign: "left",
         lineHeight: "56px",
