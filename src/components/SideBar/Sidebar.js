@@ -113,7 +113,7 @@ export default function Sidebar(props) {
     //改成組成篩選url後回傳至SearchResult內的funtcion再做ajax
     let filters = `/api/trail?filters=title:${kw},difficulty:${difficulty.value},evaluation:${evaluation},altitude1:${altitude1},altitude2:${altitude2}`;
     county.title !== undefined
-      ? (filters += `,countie:${county.title}`)
+      ? (filters += `,county:${county.title}`)
       : (filters += "");
     theme.value !== undefined
       ? (filters += `,collection:${theme.value}`)
