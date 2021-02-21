@@ -67,6 +67,7 @@ function SearchPage() {
                 </Grid>
             </Container>
             <Navigation />
+            
             </ThemeProvider>
             </div>
         </>
