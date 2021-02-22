@@ -18,6 +18,8 @@ const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/hiking/SignIn'))
 const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
 const SearchResult = lazy(() => import('../pages/SearchResult/SearchResult'))
+const PrivacyPolicy = lazy(()=> import('../pages/PrivacyPolicy/PrivacyPolicy'))
+const AboutUs =lazy(()=>import('../pages/AboutUs/AboutUs'))
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
@@ -33,8 +35,11 @@ const routes = [
   <Route path="/about" exact component={About} />,
   <Route path="/searchPage" exact component={SearchPage} />,
   <Route path="/searchResult" exact component={SearchResult} />,
+  <Route path="/privacyPolicy" exact component={PrivacyPolicy} />,
+  <Route path="/aboutUs" exact component={AboutUs} />,
+  <Route path="/Home" exact component={Home} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
-  <AuthorizedRoute path="/home" exact component={Home} />,
+  //<AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
   <AuthorizedRoute path="/toast_demo" exact component={ToastDemo} />,
   <AuthorizedRoute path="/filter_demo" exact component={FilterDemo} />,
