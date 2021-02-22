@@ -16,6 +16,7 @@ const ListPageDemo = lazy(() => import('../pages/ListPageDemo'))
 const TabsDemo = lazy(() => import('../pages/TabsDemo'))
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/hiking/SignIn'))
+const Home3 = lazy(() => import('../pages/hiking/Home3'))
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
@@ -29,6 +30,7 @@ const routes = [
   <Route path="/about" exact component={About} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   <AuthorizedRoute path="/home" exact component={Home} />,
+  <UnauthorizedRoute path="/home_home3" exact component = {Home3}/>,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
   <AuthorizedRoute path="/toast_demo" exact component={ToastDemo} />,
   <AuthorizedRoute path="/filter_demo" exact component={FilterDemo} />,
