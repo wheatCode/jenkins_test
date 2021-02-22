@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
         bottom: -10,
     },
     span: {
+        fontFamily: 'NotoSansCJKtc',
+        fontWeight:'bold',
         position: "absolute",
         top: 20,
         left: 20,
