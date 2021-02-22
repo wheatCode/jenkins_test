@@ -15,10 +15,15 @@ const FilterDemo = lazy(() => import('../pages/FilterDemo'))
 const ListPageDemo = lazy(() => import('../pages/ListPageDemo'))
 const TabsDemo = lazy(() => import('../pages/TabsDemo'))
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
+<<<<<<< HEAD
 const SignIn = lazy(() => import('../pages/hiking/SignIn'))
 const Home3 = lazy(() => import('../pages/hiking/Home3'))
+=======
+const Login1 = lazy(() => import('../pages/HikingFrontend/Login1'))
+>>>>>>> develop/master
 
 const routes = [
+  <UnauthorizedRoute path="/Login1" redirectTo="/" exact component={Login1} />,
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
   <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
   <UnauthorizedRoute
