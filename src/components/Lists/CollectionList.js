@@ -9,7 +9,6 @@ import hotSpring from "../../asset/img/icon-hot-spring.png";
 import family from "../../asset/img/icon-family.png";
 import forest from "../../asset/img/icon-forest.png";
 import sakura from "../../asset/img/icon-sakura.png";
-
 const useStyles = makeStyles((theme) => ({
     linkstlye: {
         color: "#000", textDecoration: 'none'
@@ -57,8 +56,8 @@ const CollectionList = (props) => {
     return (
         data.map((collection) => (
             <Grid item xs={6} key={collection.id}>
-                <Link to={{ pathname: '/searchResult', aboutProps: collection.name }}
-                    className={classes.linkstlye} >
+                    <Link  to={`/searchQuick/${collection.id }`} 
+                        className={classes.linkstlye} >
                     <CardActionArea>
                         <div className={classes.quickSearchDiv}>
                             <span className={classes.span}>{collection.name}</span>

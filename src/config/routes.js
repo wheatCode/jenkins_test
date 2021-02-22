@@ -17,8 +17,9 @@ const TabsDemo = lazy(() => import('../pages/TabsDemo'))
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/hiking/SignIn'))
 const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
+const SearchQuick = lazy(() => import('../pages/SearchQuick/SearchQuick'))
 const SearchResult = lazy(() => import('../pages/SearchResult/SearchResult'))
-
+const ColumnPage = lazy(() => import('../pages/ColumnPage/ColumnPage'))
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
   <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
@@ -28,11 +29,12 @@ const routes = [
     exact
     component={PasswordReset}
   />,
-  <UnauthorizedRoute path="/searchPage" exact component={SearchPage} />,
-  <UnauthorizedRoute path="/searchResult" exact component={SearchResult} />,
-  <Route path="/about" exact component={About} />,
+  
   <Route path="/searchPage" exact component={SearchPage} />,
+  <Route path="/searchQuick/:id" exact component={SearchQuick} />,
   <Route path="/searchResult" exact component={SearchResult} />,
+  <Route path="/about" exact component={About} />,
+  <Route path="/columnPage" exact component={ColumnPage} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   <AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
