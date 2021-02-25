@@ -18,11 +18,13 @@ const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/HikingFrontend/SignIn'))
 const Home3 = lazy(() => import('../pages/HikingFrontend/Home3'))
 const Login1 = lazy(() => import('../pages/HikingFrontend/Login1'))
+const Verify2 = lazy(() => import('../pages/HikingFrontend/Verify2'))
 
 const routes = [
   <UnauthorizedRoute path="/Login1" redirectTo="/" exact component={Login1} />,
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
   <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
+  <UnauthorizedRoute path="/verify2" redirectTo="/" exact component={Verify2} />,
   <UnauthorizedRoute
     path="/password_reset"
     redirectTo="/"
