@@ -30,7 +30,8 @@
     "react-router-dom": "5.x",
     "react-scripts": "4.0.1",
     "react-virtualized-auto-sizer": "1.x",
-    "react-window": "1.x"
+    "react-window": "1.x",
+    "swiper": "^6.4.15"
   },
   "scripts": {
     "start": "craco start",
