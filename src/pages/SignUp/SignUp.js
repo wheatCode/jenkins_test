@@ -3,6 +3,7 @@ import Page from 'material-ui-shell/lib/containers/Page'
 import Paper from '@material-ui/core/Paper'
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from 'base-shell/lib/providers/Auth'
@@ -10,63 +11,105 @@ import { useHistory } from 'react-router-dom'
 import { useIntl } from 'react-intl'
 import { useMenu } from 'material-ui-shell/lib/providers/Menu'
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: 'auto',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
-    [theme.breakpoints.up(620 + theme.spacing(6))]: {
-      width: 400,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
-      3
-    )}px`,
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    width: 192,
-    height: 192,
-    color: theme.palette.secondary.main,
-  },
-  form: {
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+import { useForm } from 'react-hook-form';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     height: `100%`,
   },
-}))
+  arrow: {
+    margin: '40px 371px 0px 16px',
+    color: '#00d04c',
+  },
+  title: {
+    width: '98px',
+    height: '36px',
+    margin: '61px 297px 31px 16px',
+    fontFamily: 'NotoSansCJKtc',
+    fontSize: '24px',
+    fontWeight: '500',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#232323',
+  },
+  form: {
+    margin: '0 16px 48px 16px',
+  },
+  label: {
+    width: '66px',
+    height: '24px',
+    margin: '0px 0px 31px 0px',
+    fontFamily: 'NotoSansCJKtc',
+    fontSize: '16px',
+    fontWeight: '500',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#232323',
+  },
+  errorInfo: {
+    width: '58px',
+    height: '21px',
+    margin: '16px 321px 55px 0px',
+    fontFamily: 'NotoSansCJKtc',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#ff3b30',
+  },
+  passwordInfo: {
+    width: '169px',
+    height: '24px',
+    margin: '16px 211px 55px 0px',
+    fontFamily: 'NotoSansCJKtc',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#979797',
+  },
+  privacyInfo: {
+    width: '-webkit-fill-available',
+    height: '45px',
+    margin: '16px 0px 0px',
+    fontFamily: 'NotoSansCJKtc',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#232323',
+  },
+  submit: {
+    width: '-webkit-fill-available',
+    height: '48px',
+    margin: '40px 0px 0px 0px',
+    backgroundColor: '#00d04c',
+    color: '#ffffff',
+  },
+})
 
 const SignUp = () => {
   const classes = useStyles()
-  const intl = useIntl()
   const history = useHistory()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [userEmail, setUserEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const { toggleThis } = useMenu()
   const { setAuth } = useAuth()
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    authenticate({
-      displayName: 'User',
-      email: username,
-    })
-  }
+  const { register, handleSubmit } = useForm()
 
   const authenticate = (user) => {
     setAuth({ isAuthenticated: true, ...user })
@@ -84,96 +127,34 @@ const SignUp = () => {
   }
 
   return (
-    <Page
-      pageTitle={intl.formatMessage({
-        id: 'sign_up',
-        defaultMessage: ' Sign up',
-      })}
-      onBackClick={() => {
-        history.goBack()
-      }}
-    >
-      <Paper className={classes.paper} elevation={6}>
-        <div className={classes.container}>
-          <Typography component="h1" variant="h5">
-            {intl.formatMessage({ id: 'sign_up', defaultMessage: 'Sign up' })}
-          </Typography>
-          <form className={classes.form} onSubmit={handleSubmit} noValidate>
-            <TextField
-              value={username}
-              onInput={(e) => setUsername(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label={intl.formatMessage({
-                id: 'username',
-                defaultMessage: 'Username',
-              })}
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              value={userEmail}
-              onInput={(e) => setUserEmail(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={intl.formatMessage({
-                id: 'email',
-                defaultMessage: 'E-Mail',
-              })}
-              name="email"
-              autoComplete="email"
-            />
-            <TextField
-              value={password}
-              onInput={(e) => setPassword(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label={intl.formatMessage({
-                id: 'password',
-                defaultMessage: 'Password',
-              })}
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <TextField
-              value={confirmPassword}
-              onInput={(e) => setConfirmPassword(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password_confirm"
-              label={intl.formatMessage({
-                id: 'password_confirm',
-                defaultMessage: 'Confirm Password',
-              })}
-              type="password"
-              id="password_confirm"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              {intl.formatMessage({ id: 'sign_up', defaultMessage: 'Sign up' })}
-            </Button>
-          </form>
+    <Page>
+      <div className={classes.container}>
+        <ArrowBackIcon className={classes.arrow} />
+        <div className={classes.title}>註冊帳號</div>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+          <label className={classes.label}>電子信箱</label>
+          <Input placeholder="請輸入電子信箱" fullWidth />
+          <div className={classes.errorInfo}>錯誤資訊</div>
+          <label className={classes.label}>密碼</label><br />
+          <Input placeholder="請輸入密碼" fullWidth />
+          <div className={classes.passwordInfo}>密碼必須包含8個字元以上</div>
+          <label className={classes.label}>確認密碼</label><br />
+          <Input placeholder="請重新輸入密碼" fullWidth />
+          <div className={classes.privacyInfo}>使用這個應用程式前，請先詳閱「Go Hiking」的
+          《<span style={{ color: '#007aff' }}>隱私權政策</span>》及《<span style={{ color: '#007aff' }}>服務條款</span>》
         </div>
-      </Paper>
+          
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            
+            className={classes.submit}
+          >
+            同意並註冊
+          </Button>
+        </form>
+      </div>
     </Page>
   )
 }
