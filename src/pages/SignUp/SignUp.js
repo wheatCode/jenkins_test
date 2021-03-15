@@ -10,7 +10,7 @@ import { useAuth } from 'base-shell/lib/providers/Auth'
 import { useHistory } from 'react-router-dom'
 import { useIntl } from 'react-intl'
 import { useMenu } from 'material-ui-shell/lib/providers/Menu'
-
+import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -100,6 +100,11 @@ const useStyles = makeStyles({
     color: '#ffffff',
   },
 })
+const api = axios.create({
+  baseURL: "https://gohiking-server.herokuapp.com"
+});
+
+
 
 const SignUp = () => {
   const classes = useStyles()
@@ -109,9 +114,10 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const { toggleThis } = useMenu()
   const { setAuth } = useAuth()
-  const { register, handleSubmit } = useForm()
+  const { register } = useForm()
 
   const authenticate = (user) => {
+    
     setAuth({ isAuthenticated: true, ...user })
     toggleThis('isAuthMenuOpen', false)
 
@@ -125,13 +131,32 @@ const SignUp = () => {
       history.push(_route)
     }
   }
-
+  //API POST TEST
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post(`https://gohiking-server.herokuapp.com/api/register`, {
+      "email": "test1@gmail.com",
+      "password": "test1"
+     })
+     .then(res => {
+      console.log(res.data);
+     })
+     .catch(err => {
+      console.log(Error);
+    })
+  }
+  
+  //Go Next
+  let back = useHistory();
+  function GoToRegister0_1() {
+    back.push("/register0_1");
+  }
   return (
     <Page>
       <div className={classes.container}>
         <ArrowBackIcon className={classes.arrow} />
         <div className={classes.title}>註冊帳號</div>
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} >
           <label className={classes.label}>電子信箱</label>
           <Input placeholder="請輸入電子信箱" fullWidth />
           <div className={classes.errorInfo}>錯誤資訊</div>
@@ -148,8 +173,9 @@ const SignUp = () => {
             type="submit"
             fullWidth
             variant="contained"
-            
+            onClick={GoToRegister0_1}
             className={classes.submit}
+            onSubmit={handleSubmit}
           >
             同意並註冊
           </Button>
