@@ -11,6 +11,7 @@ import AppleIcon from '@material-ui/icons/Apple';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Page from 'material-ui-shell/lib/containers/Page';
 import { Link as RouterLink} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { MemoryRouter as Router } from 'react-router';
 
 const useStyles = makeStyles((theme)=> ({
@@ -115,7 +116,10 @@ const testTheme = createMuiTheme({
 
 export default function ImgMediaCard() {
   const classes = useStyles();
-
+  let back = useHistory();
+  function GoToLogin1_1() {
+    back.push("/login1_1");
+  }
   return (
     
     <Page>      
@@ -144,7 +148,7 @@ export default function ImgMediaCard() {
           <ColorButton3 variant = "contained" startIcon={<AppleIcon style={{color: "#ffffff"}}/>}>
             透過Apple ID登入
           </ColorButton3>
-          <ColorButton4 variant = "contained" startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
+          <ColorButton4 variant = "contained" startIcon={<MailOutlineIcon style={{color: "#000000"}}  />}onClick={GoToLogin1_1}>
             透過Mail登入
           </ColorButton4>
         </div>
