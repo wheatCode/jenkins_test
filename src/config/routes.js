@@ -3,6 +3,7 @@ import React, { lazy } from 'react'
 import AuthorizedRoute from 'base-shell/lib/components/AuthorizedRoute/AuthorizedRoute'
 import UnauthorizedRoute from 'base-shell/lib/components/UnauthorizedRoute/UnauthorizedRoute'
 import { Route } from 'react-router-dom'
+import CropAvatar from 'pages/PersonalPage/CropAvatar'
 
 // const SignIn = lazy(() => import('../pages/SignIn/SignIn'))
 const SignUp = lazy(() => import('../pages/SignUp/SignUp'))
@@ -18,6 +19,7 @@ const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/hiking/SignIn'))
 const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
 const SearchResult = lazy(() => import('../pages/SearchResult/SearchResult'))
+const PersonalPage = lazy(() => import('../pages/PersonalPage'))
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
@@ -40,6 +42,9 @@ const routes = [
   <AuthorizedRoute path="/filter_demo" exact component={FilterDemo} />,
   <AuthorizedRoute path="/list_page_demo" exact component={ListPageDemo} />,
   <AuthorizedRoute path="/tabs_demo" exact component={TabsDemo} />,
+  <UnauthorizedRoute path="/personalPage" exact component={PersonalPage} />,
+  <UnauthorizedRoute path="/cropAvatar" exact component={CropAvatar} />,
+
 ]
 
 export default routes
