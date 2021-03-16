@@ -13,6 +13,7 @@ import { useMenu } from 'material-ui-shell/lib/providers/Menu'
 import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { DateRange } from '@material-ui/icons'
 
 const useStyles = makeStyles({
   container: {
@@ -100,11 +101,6 @@ const useStyles = makeStyles({
     color: '#ffffff',
   },
 })
-const api = axios.create({
-  baseURL: "https://gohiking-server.herokuapp.com"
-});
-
-
 
 const SignUp = () => {
   const classes = useStyles()
@@ -114,54 +110,46 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const { toggleThis } = useMenu()
   const { setAuth } = useAuth()
-  const { register } = useForm()
+  const { register, handleSubmit } = useForm()
 
-  const authenticate = (user) => {
-    
-    setAuth({ isAuthenticated: true, ...user })
-    toggleThis('isAuthMenuOpen', false)
-
-    let _location = history.location
-    let _route = '/home'
-
-    if (_location.state && _location.state.from) {
-      _route = _location.state.from.pathname
-      history.push(_route)
-    } else {
-      history.push(_route)
-    }
-  }
-  //API POST TEST
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post(`https://gohiking-server.herokuapp.com/api/register`, {
-      "email": "test1@gmail.com",
-      "password": "test1"
-     })
-     .then(res => {
-      console.log(res.data);
-     })
-     .catch(err => {
-      console.log(Error);
+  const axios = require('axios');
+  let responsedJSON;
+  // API POST
+  const onSubmit = async (data) => {
+    console.log(data);
+    await axios.post('https://gohiking-server.herokuapp.com/api/register', data)
+    .then(function (response) {
+      console.log('correct');
+      const { token } = response.data;
+      responsedJSON = response.data
+      localStorage.setItem('token', token)
     })
+    .catch(function (error) {
+      console.log('error');
+      responsedJSON = error.response.data;
+    })
+    .finally(function () {
+      console.log(responsedJSON);
+    });  
   }
-  
+
   //Go Next
-  let back = useHistory();
+  let next = useHistory();
   function GoToRegister0_1() {
-    back.push("/register0_1");
+    next.push("/register0_1");
   }
+
   return (
     <Page>
       <div className={classes.container}>
         <ArrowBackIcon className={classes.arrow} />
         <div className={classes.title}>註冊帳號</div>
-        <form className={classes.form} onSubmit={handleSubmit} >
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
           <label className={classes.label}>電子信箱</label>
-          <Input placeholder="請輸入電子信箱" fullWidth />
+          <Input name="email" placeholder="請輸入電子信箱" fullWidth inputRef={register} />
           <div className={classes.errorInfo}>錯誤資訊</div>
           <label className={classes.label}>密碼</label><br />
-          <Input placeholder="請輸入密碼" fullWidth />
+          <Input name="password" placeholder="請輸入密碼" fullWidth inputRef={register} />
           <div className={classes.passwordInfo}>密碼必須包含8個字元以上</div>
           <label className={classes.label}>確認密碼</label><br />
           <Input placeholder="請重新輸入密碼" fullWidth />
@@ -175,7 +163,6 @@ const SignUp = () => {
             variant="contained"
             onClick={GoToRegister0_1}
             className={classes.submit}
-            onSubmit={handleSubmit}
           >
             同意並註冊
           </Button>

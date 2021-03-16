@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect ,useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Page from 'material-ui-shell/lib/containers/Page';
 import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
+import { useForm } from 'react-hook-form';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -96,27 +97,66 @@ const useStyles = makeStyles((theme) => ({
 
   export default function SignIn() {
     const classes = useStyles();
+    const [name, setName] = React.useState('');
     const [gender, setGender] = React.useState('');
     const [phoneRegion, setPhoneRegion] = React.useState('');
+    const [phoneNumeber, setPhoneNumeber] = React.useState('');
+    const [selectedDate, setSelectedDate] = React.useState('');
+    const [inputValue, setInputValue] = useState();
     const [live, setLive] = React.useState('');
+    const { handleSubmit } = useForm()
     const handleChange = (event) => {
-     setGender(event.target.value);
+      setGender(event.target.value);
     };
     const handlePhoneRegion = (event) => {
-     setPhoneRegion(event.target.value);
+      setPhoneRegion(event.target.value);
     };
     const handleLiveChange = (event) => {
-        setLive(event.target.value);
-       };
+      setLive(event.target.value);
+    };
+    const handleDateChange = (date, value) => {
+      setSelectedDate(date);
+      setInputValue(value);
+    };
+    
     const Placeholder = ({ children }) => {
       const classes = usePlaceholderStyles();
       return <div className={classes.placeholder}>{children}</div>;
     };
-    const [selectedDate, setSelectedDate] = React.useState('');
 
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
-    };
+    let testOuputObj = {
+      name: name,
+      gender: gender,
+      phone_number: phoneNumeber,
+      phone_region: phoneRegion,
+      birth: inputValue,
+      live: live
+    }
+    //Test Output JSON
+    const headers = {
+      'Authorization': 'Bearer '+localStorage.getItem('token')
+    }
+    console.log(testOuputObj);
+    const axios = require('axios');
+    let responsedJson; // 將回傳的JSON先定義為變數，後面再賦值
+    const onSubmit = async(data) => {
+      data = testOuputObj;
+      console.log(data);
+      console.log(headers);
+      await axios.post('https://gohiking-server.herokuapp.com/api/profile', data, { headers })
+      .then(function (response) {
+        console.log('correct');
+        responsedJson = response.data;
+      })
+      .catch(function (error) {
+        console.log('error');
+        responsedJson = error.response.data;
+      })
+      .finally(function () {
+        console.log(responsedJson);
+      }); 
+    }
+
     return (
         
       <Page>
@@ -125,11 +165,16 @@ const useStyles = makeStyles((theme) => ({
           <Typography className={classes.Title } >
             建立個人資料
           </Typography>
-          <FormControl className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Typography className={classes.Text}>
             姓名 
           </Typography>
-          <Input className={classes.InputBackground} placeholder="請輸入您的名稱" fullWidth />
+          <Input 
+          className={classes.InputBackground} 
+          placeholder="請輸入您的名稱" 
+          fullWidth 
+          onChange={event => setName(event.target.value)}//Get value in Email
+          />
           <Typography className={classes.Text} >
             性別
           </Typography>  
@@ -142,8 +187,8 @@ const useStyles = makeStyles((theme) => ({
           }
           onChange={handleChange}
           >   
-            <MenuItem value={1}>男</MenuItem>
-            <MenuItem value={2}>女</MenuItem>
+            <MenuItem value={'男'}>男</MenuItem>
+            <MenuItem value={'女'}>女</MenuItem>
           </Select>
           <Typography className={classes.Text} >
             手機
@@ -161,27 +206,31 @@ const useStyles = makeStyles((theme) => ({
             <MenuItem value={886}>台灣+886</MenuItem>
             <MenuItem value={852}>香港+852</MenuItem>
           </Select>
-          <Input className={classes.PhoneNumberBackground} placeholder="請輸您的手機號碼"  fullWidth/>
+          <Input 
+          className={classes.PhoneNumberBackground} 
+          placeholder="請輸您的手機號碼"  
+          onChange={event => setPhoneNumeber(event.target.value)}//Get value in Email
+          fullWidth/>
           </div>
           <Typography className={classes.Text} >
             生日
           </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
-          clearable
-          placeholder="請選擇"
-          className={classes.InputBackground}
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          invalidDateMessage=''
-          id="date-picker-inline"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
+            placeholder="請選擇"
+            className={classes.InputBackground}
+            disableToolbar
+            variant="inline"
+            format="yyyy/MM/dd"
+            margin="normal"
+            invalidDateMessage=''
+            id="date-picker-inline"
+            value={selectedDate}
+            inputValue={inputValue}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
           />
           </MuiPickersUtilsProvider>
           <Typography className={classes.Text} >
@@ -207,7 +256,7 @@ const useStyles = makeStyles((theme) => ({
             >
             同意並註冊
           </Button>
-        </FormControl>
+        </form>
       </div>
     </Page>
     );
