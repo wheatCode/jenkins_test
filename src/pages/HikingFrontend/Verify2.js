@@ -165,7 +165,7 @@ export default function Verify2(props){
       const [error, setError] = useState('');
       const [makesure, setMakesure] = useState('');
 
-        var responsedJson = '';
+      var responsedJson = '';
         const postBack = async() =>{
           console.log(code);
           await api.post('api/password/confirm', code).then(function (response) {
