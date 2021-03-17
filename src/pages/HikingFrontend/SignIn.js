@@ -11,6 +11,8 @@ import AppleIcon from '@material-ui/icons/Apple';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Page from 'material-ui-shell/lib/containers/Page';
 import { Link as RouterLink} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { MemoryRouter as Router } from 'react-router';
 import bg from '../../asset/img/sample.jpg';
 
 const useStyles = makeStyles((theme)=> ({
@@ -107,7 +109,10 @@ const testTheme = createMuiTheme({
 
 export default function ImgMediaCard() {
   const classes = useStyles();
-
+  let back = useHistory();
+  function GoToLogin1_1() {
+    back.push("/login1_1");
+  }
   return (
     
          
@@ -133,7 +138,10 @@ export default function ImgMediaCard() {
           <ColorButton3 variant = "contained" startIcon={<AppleIcon style={{color: "#ffffff"}}/>}>
             透過Apple ID登入
           </ColorButton3>
-          <ColorButton4 variant = "contained" component = {RouterLink} to={{pathname: "/Login1"}} startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
+          <ColorButton4 variant = "contained" startIcon={<MailOutlineIcon style={{color: "#000000"}}  />}onClick={GoToLogin1_1}>
+
+          <ColorButton4 variant = "contained" onClick = {GoToLogin1_1} startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
+
             透過Mail登入
           </ColorButton4>
         </div>
@@ -147,47 +155,5 @@ export default function ImgMediaCard() {
             直接使用
           </Button>
       </div>
-  
-      
-        /*  */
-
-
-      //   <CardActions>
-      //     <Grid container spacing={3} direction="column" justifyContent = "center" alignItems = "center" >
-      //       <Grid item xs = {12}>
-      //         <ColorButton1 variant = "contained" startIcon={<AndroidIcon style={{color: "#00d04c"}}/>}>
-      //           透過Google登入
-      //         </ColorButton1>
-      //       </Grid>
-      //       <Grid item xs = {12}>
-      //         <ColorButton2  variant="contained" startIcon={<FacebookIcon/>}>
-      //           透過Facebook登入
-      //         </ColorButton2>
-      //       </Grid>
-      //       <Grid item xs = {12}>
-      //         <ColorButton3 variant = "contained" color = "secondary" startIcon={<AppleIcon />} style={{letterSpacing: "1.3px"}} >
-      //           透過Apple ID登入
-      //         </ColorButton3>
-      //       </Grid>
-      //       <Grid item xs = {12}>
-      //         <ColorButton1 variant = "contained" startIcon={<MailOutlineIcon/>}>
-      //           透過Email登入
-      //         </ColorButton1>
-      //       </Grid>
-      //     </Grid>
-      //   </CardActions>
-      //     <CardContent >
-      //         <Typography variant="body2" component="p" style={{color: "black", direction: "column", alignItems: "center"}}>
-      //           還不是會員嗎?
-      //         </Typography>
-      //         <Typography variant="body2" component="p" style={{color: "black"}}>
-      //           註冊新帳號
-      //         </Typography>
-      //         <Button variant = "outlined" style={{color: "#00d04c", borderColor: "#00d04c"}}>
-      //           直接使用
-      //         </Button>
-      //     </CardContent>
-          
-      // </Card>
   );
 }
