@@ -74,7 +74,10 @@ export default function Verify2(props){
     var [number3, setNumber3] = useState(-1);
     var [number4, setNumber4] = useState(-1);
 
-    
+    const headers = {
+      'Email': localStorage.getItem('Email')
+    }
+    console.log(headers);
 
     const handleCodeChange = (e) => {
       const {id , value} = e.target
@@ -161,7 +164,7 @@ export default function Verify2(props){
       
       // 這邊是POST的部分
       const history = useHistory();
-      const [token, setToken] = useState(-1);
+      //const [token, setToken] = useState(-1);
       const [error, setError] = useState('');
       const [makesure, setMakesure] = useState('');
 
@@ -175,6 +178,7 @@ export default function Verify2(props){
             console.log(JSON.parse(localStorage.getItem('token')));
             console.log('得到token!');
             console.log('ready to go');
+            console.log(token)
             history.push('/ResetPassword')
           })
           .catch(function (error) {

@@ -20,16 +20,16 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     width: '-webkit-fill-available',
-    height: '48',
+    height: '48px',
+    fontSize: '16px',
     margin: '56px 0 0',
-    padding: '12px 172px 12px 174px',
     backgroundColor: '#00d04c',
     color: '#ffffff',
     borderRadius: 4
   },
   container: {
     width: '-webkit-fill-available',
-    height: 768,
+    height: '768px',
     padding: '40px 16px 213px',
     backgroundColor: '#ffffff'
     
@@ -60,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323'
   },
   Text:{
-    width: '66',
-    height:'24',
+    width: '66px',
+    height:'24px',
     margin: '0 313px 1px 0',
     fontSize: '16px',
     fontWeight: '500',
@@ -72,8 +72,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323',
   },
   ErrorInfo:{
-    width: '58',
-    height: '21',
+    width: '58px',
+    height: '21px',
     margin: '16px 263px 56px 0',
     fontFamily: "NotoSansCJKtc",
     fontSize: '14px',
@@ -85,8 +85,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#ff3b30',
   },
   ForgotInfo:{
-    width: '58',
-    height: '21',
+    width: '66px',
+    height: '21px',
     fontFamily: "NotoSansCJKtc",
     margin: '-77px 0 56px 263px',
     fontSize: '14px',
@@ -113,10 +113,14 @@ export default function SignIn() {
   let responsedJSON;
   //Go to ? Page
   let goNext = useHistory();
-  function GoToLogin1_2() {
-    goNext.push("/home");
-  }
+  let goHome = useHistory();
   let back = useHistory();
+  function GoToLogin1_2() {
+    goNext.push("/login1_2");
+  }
+  function GoHome() {
+    goHome.push("/home");
+  }
   function backhandleClick() {
     back.push("/signin");
   }
@@ -129,7 +133,7 @@ export default function SignIn() {
       const { token } = response.data;
       responsedJSON = response.data
       localStorage.setItem('token', token)
-      GoToLogin1_2()
+      GoHome()
     })
     .catch(function (error) {
       console.log('error');
@@ -183,7 +187,7 @@ export default function SignIn() {
             variant="contained"
             className={classes.submit}
           >
-          登入
+            登入
         </Button>
       </form>
     </div>
