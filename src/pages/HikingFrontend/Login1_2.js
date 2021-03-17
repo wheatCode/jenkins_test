@@ -104,7 +104,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [email, setEmail] = React.useState('');
   const classes = useStyles();
   const { register, handleSubmit } = useForm()
   const axios = require('axios');
