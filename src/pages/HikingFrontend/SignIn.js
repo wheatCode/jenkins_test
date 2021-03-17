@@ -11,17 +11,24 @@ import AppleIcon from '@material-ui/icons/Apple';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Page from 'material-ui-shell/lib/containers/Page';
 import { Link as RouterLink} from "react-router-dom";
-import { MemoryRouter as Router } from 'react-router';
+import bg from '../../asset/img/sample.jpg';
 
 const useStyles = makeStyles((theme)=> ({
   container: {
     display:'flex',
     flexDirection: 'column',  // flexDirection:'column' 使button strech 開來
-    width:'411px',
-    height: '768px',
+    // width:'411px',
+    width: '100%',
+    // height: '736px',
+    height: '100%',
   },
   root:{
     maxheight: '600',
+    width: '100%',
+    margin: '0',
+    padding: '0',
+    overflowX: 'hidden',
+    objectFit: 'cover',
   },
   google:{
     margin: 'auto', 
@@ -40,7 +47,7 @@ const ColorButton1 = withStyles(() => ({
     backgroundColor: "#ffffff",
     letterSpacing: 1.6,
     color: "#000000",
-    width: '379px',
+    width: '92%',
     height: '44px',
     marginBottom: '16px',
     margin: 'auto', 
@@ -50,10 +57,11 @@ const ColorButton1 = withStyles(() => ({
 
 const ColorButton2 = withStyles(() => ({
   root: {
+    display: 'flex',
     backgroundColor: "#4267b2",
     letterSpacing: 2,
     color: "#ffffff",
-    width: '379px',
+    width: '92%',
     height: '44px',
     marginBottom: '16px',
     margin: 'auto',  
@@ -63,13 +71,14 @@ const ColorButton2 = withStyles(() => ({
 
 const ColorButton3 = withStyles(() => ({
   root: {
+    display: 'flex',
     backgroundColor: "#000000",
     letterSpacing: 2,
     color: "#ffffff",    
-    width: '379px',
+    width: '92%',
     height: '44px',
     marginBottom: '16px',
-    marginRight: 'auto',     
+    margin: 'auto',     
   },
 }))(Button);
 
@@ -79,29 +88,12 @@ const ColorButton4 = withStyles(() => ({
     backgroundColor: "#ffffff",
     letterSpacing: 1.6,
     color: "#000000",
-    width: '379px',
+    width: '92%',
     height: '44px',
     margin: 'auto', 
     fontWeight: '700',  
   },
 }))(Button);
-
-const imageTheme = createMuiTheme({
-  overrides: {
-    // Style sheet name ⚛️
-    MuiCardMedia: {
-      // Name of the rule
-      img: {
-        //Some CSS
-        height: '381px',
-        width: '411px',
-      //   margin: '0px 8px',
-        objectFit: 'cover',
-      },
-      
-    },
-  },
-});
 
 const testTheme = createMuiTheme({
   palette: {
@@ -118,23 +110,20 @@ export default function ImgMediaCard() {
 
   return (
     
-    <Page>      
-      <div className= {classes.container}>
-        <ThemeProvider theme={imageTheme}>
-          <Card className={classes.root} style={{backgroundColor: "white"}}>
-            <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt="Climbing Image"
-                  height="381"
-                  image="/asset/images/sample.jpg" 
-                  title="Sign-in background img"
-                  classes={{}}
-                />
-              </CardActionArea>
-          </Card>
-        </ThemeProvider>
-        <div style={{margin: "32px 16px 0px",}}>
+         
+      <div className= {classes.container} style={{objectFit: "cover"}}>
+        <div style={{
+          width: '100vw',
+          height: 381,
+          overflow: 'hidden',
+        }}>
+          <img src={bg} alt={'bg'} style={{
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
+          }} />
+        </div>
+        <div style={{margin: "16.5px 16px 0px",}}>
           <ColorButton1 className = {classes.google} variant = "contained" startIcon={<AndroidIcon style={{color: "#00d04c"}}/>}>
             透過Google登入
           </ColorButton1>
@@ -144,7 +133,7 @@ export default function ImgMediaCard() {
           <ColorButton3 variant = "contained" startIcon={<AppleIcon style={{color: "#ffffff"}}/>}>
             透過Apple ID登入
           </ColorButton3>
-          <ColorButton4 variant = "contained" startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
+          <ColorButton4 variant = "contained" component = {RouterLink} to={{pathname: "/Login1"}} startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
             透過Mail登入
           </ColorButton4>
         </div>
@@ -154,12 +143,11 @@ export default function ImgMediaCard() {
           <Typography variant="body2" component="p" style={{color: "black", direction: "column", textAlign: "center"}}>
             還不是會員嗎? <RouterLink to="/signup" style={{color: '#000000'}}>註冊新帳號</RouterLink>
           </Typography>
-          <Button variant = "outlined" component={RouterLink} to="/home_home3" style={{color: "#00d04c", fontWeight:"700" , borderColor: "#00d04c", width:"182px", height: "40px", margin: "auto", }}>
+          <Button variant = "outlined" component={RouterLink} to="/home" style={{color: "#00d04c", fontWeight:"700" , borderColor: "#00d04c", width:"182px", height: "40px", margin: "auto",marginTop: '16px' }}>
             直接使用
           </Button>
       </div>
-      
-    </Page>
+  
       
         /*  */
 
