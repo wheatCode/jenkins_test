@@ -138,10 +138,7 @@ export default function ImgMediaCard() {
           <ColorButton3 variant = "contained" startIcon={<AppleIcon style={{color: "#ffffff"}}/>}>
             透過Apple ID登入
           </ColorButton3>
-          <ColorButton4 variant = "contained" startIcon={<MailOutlineIcon style={{color: "#000000"}}  />}onClick={GoToLogin1_1}>
-
           <ColorButton4 variant = "contained" onClick = {GoToLogin1_1} startIcon={<MailOutlineIcon style={{color: "#000000"}}/>}>
-
             透過Mail登入
           </ColorButton4>
         </div>
