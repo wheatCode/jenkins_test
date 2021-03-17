@@ -10,6 +10,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input'
+import { useForm } from 'react-hook-form';
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323'
   },
   Text:{
-    width: '66',
+    width: '-webkit-fill-available',
     height:'24',
     margin: '0 313px 1px 0',
     fontSize: '16px',
@@ -62,8 +64,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323',
   },
   Hint:{
-    width: '168',
-    height: '21',
+    width: '180px',
+    height: '21px',
     margin: '16px 211px 55px 0',
     fontFamily: "NotoSansCJKtc",
     fontSize: '14px',
@@ -75,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#979797',
   },
   ModifyTextFieldColor: {
-    // Theme Color, or use css color in quote
     fontSize: '14px',
     color: '#979797',  
     borderColor:'#979797'
@@ -102,9 +103,29 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const fullWidth = React.useState(true);
   const [maxWidth] = React.useState('xs');
-
+  const { register, handleSubmit } = useForm()
+  const axios = require('axios');
+  let responsedJSON;
+  // API POST
+  const onSubmit = async (data) => {
+    console.log(data);
+    await axios.post('https://gohiking-server.herokuapp.com/api/password/change', data)
+    .then(function (response) {
+      console.log('correct');
+      const { token } = response.data;
+      responsedJSON = response.data
+      localStorage.setItem('token', token)
+    })
+    .catch(function (error) {
+      console.log('error');
+      responsedJSON = error.response.data;
+    })
+    .finally(function () {
+      console.log(responsedJSON);
+    });  
+  }
+  //Open Dailog
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -114,42 +135,35 @@ export default function SignIn() {
   };
 
   return (
-    <Page>
       <div className={classes.container}>
-        <Typography className={classes.Title} textAlign="left">
+        <Typography className={classes.Title} textalign="left">
           重設密碼
         </Typography>
-        <FormControl className={classes.form}>
-        <Typography className={classes.Text}  textAlign="left">
+        <form className={classes.form}onSubmit={handleSubmit(onSubmit)} >
+        <Typography className={classes.Text}  textalign="left">
           密碼 
         </Typography>   
-          <TextField
-            InputLabelProps={{
-              className: classes.ModifyTextFieldColor
-            }}
-            className={classes.InputBackground}
-            id="email"
-            label="請輸入新的密碼"
-            name="email"
-          />
-        <Typography className={classes.Hint}  textAlign="left">
-          密碼必須包含八個字元以上
-        </Typography>  
-        <Typography className={classes.Text}  textAlign="left">
-          確認密碼
-        </Typography>  
-          <TextField
-            InputLabelProps={{
-              className: classes.ModifyTextFieldColor
-            }}
+          <Input
+            inputRef={register}
             className={classes.InputBackground}
             id="password"
-            label="請重新輸入密碼 "
+            label="請輸入新的密碼"
             name="password"
+          />
+        <Typography className={classes.Hint}  textalign="left">
+          密碼必須包含八個字元以上
+        </Typography>  
+        <Typography className={classes.Text}  textalign="left">
+          確認密碼
+        </Typography>  
+          <Input
+            className={classes.InputBackground}
+            id="confirm"
+            label="請重新輸入密碼 "
+            name="confirm"
           />
         <Button
             type="submit"
-            fullWidth
             variant="contained"
             className={classes.submit}
             onClick={handleClickOpen }
@@ -157,7 +171,6 @@ export default function SignIn() {
           繼續
         </Button>
         <Dialog
-        fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
         onClose={handleClose}
@@ -176,8 +189,7 @@ export default function SignIn() {
           </Button>
         </DialogActions>
       </Dialog>
-      </FormControl>
+      </form>
     </div>
-  </Page>
   );
 }

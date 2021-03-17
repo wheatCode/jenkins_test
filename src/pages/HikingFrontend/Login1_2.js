@@ -5,10 +5,13 @@ import { useHistory } from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Page from 'material-ui-shell/lib/containers/Page'
+import Page from 'material-ui-shell/lib/containers/Page';
+import { useForm } from 'react-hook-form';
 import FormControl from '@material-ui/core/FormControl';
 import ReCAPTCHA from "react-google-recaptcha";
+import Input from '@material-ui/core/Input'
 import axios from "axios";
+import { SignalCellularConnectedNoInternet4BarRounded } from '@material-ui/icons';
 //localhost記得改成127.0.0.1才會出現驗證
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -103,31 +106,52 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { register, handleSubmit } = useForm()
+  const axios = require('axios');
+  let responsedJSON;
   let back = useHistory();
+  let GoNext = useHistory();
+  function ResetPassword() {
+    GoNext.push("/resetPassword");
+  }
   function onChange(value) {
     console.log("Captcha value:", value);
   }
   function backhandleClick() {
     back.push("/login1_1");
   }
-  function ResetPassword() {
-    back.push("/resetPassword");
+
+  // API POST
+  const onSubmit = async (data) => {
+    console.log(data);
+    await axios.post('https://gohiking-server.herokuapp.com/api/password/forget', data)
+    .then(function (response) {
+      console.log('correct');
+      const { token } = response.data;
+      responsedJSON = response.data
+      localStorage.setItem('token', token)
+      ResetPassword()
+    })
+    .catch(function (error) {
+      console.log('error');
+      responsedJSON = error.response.data;
+    })
+    .finally(function () {
+      console.log(responsedJSON);
+    });  
   }
   return (
-    <Page>
       <div className={classes.container}>
         <ArrowBackIcon className={classes.MaterialIconsBlackArrowback} onClick={backhandleClick} ></ArrowBackIcon>
-        <Typography className={classes.Title} textAlign="left">
+        <Typography className={classes.Title} textalign="left">
           忘記密碼
         </Typography>
-        <FormControl className={classes.form} noValidate>
-        <Typography className={classes.Text}  textAlign="left">
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Typography className={classes.Text}  textalign="left">
           電子信箱 
         </Typography>   
-          <TextField
-            InputLabelProps={{
-              className: classes.ModifyTextFieldColor
-            }}
+          <Input
+            inputRef={register}
             className={classes.InputBackground}
             id="email"
             label="請輸入你的電子信箱"
@@ -142,15 +166,12 @@ export default function SignIn() {
          />
         <Button
             type="submit"
-            fullWidth
             variant="contained"
             className={classes.submit}
-            onClick={ResetPassword}
           >
           繼續
         </Button>
-      </FormControl>
+      </form>
     </div>
-  </Page>
   );
 }
