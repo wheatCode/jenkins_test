@@ -20,29 +20,28 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     width: '-webkit-fill-available',
-    height: '48',
+    height: '48px',
     margin: '56px 0 0',
-    padding: '12px 172px 12px 174px',
     backgroundColor: '#00d04c',
     color: '#ffffff',
     borderRadius: 4
   },
   container: {
     width: '-webkit-fill-available',
-    height: 768,
-    padding: '40px 16px 213px',
+    height: '768px',
+    padding: '125px 16px 213px',
     backgroundColor: '#ffffff'
   },
   InputBackground:{
     width: '-webkit-fill-available',
-    height: '40',
+    height: '40px',
     margin: '1px 0 0',
     padding: '9px 0 0',
     borderColor:'#232323',
   },
   Title:{
-    width: '98',
-    height: '36',
+    width: '98px',
+    height: '36px',
     margin: '0 281px 31px 0',
     fontFamily: "NotoSansCJKtc",
     fontSize: '24px',
@@ -52,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323'
   },
   Text:{
-    width: '-webkit-fill-available',
-    height:'24',
+    width: '66px',
+    height:'24px',
     margin: '0 313px 1px 0',
     fontSize: '16px',
     fontWeight: '500',
@@ -105,17 +104,34 @@ export default function SignIn() {
   const [open, setOpen] = React.useState(false);
   const [maxWidth] = React.useState('xs');
   const { register, handleSubmit } = useForm()
+  const [password, setPassword] = React.useState('');
+  const [comfirm, setComfirm] = React.useState('');
   const axios = require('axios');
   let responsedJSON;
+  
+  //Open Dailog
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  //get token from verify
+  console.log('token: ' + localStorage.getItem('token'));
+  const headers = {
+    'Authorization': 'Bearer '+localStorage.getItem('token')
+  }
+  console.log(headers);
   // API POST
   const onSubmit = async (data) => {
     console.log(data);
-    await axios.post('https://gohiking-server.herokuapp.com/api/password/change', data)
+    await axios.post('https://gohiking-server.herokuapp.com/api/password/change', data ,{ headers })
     .then(function (response) {
       console.log('correct');
-      const { token } = response.data;
+      //const { token } = response.data;
       responsedJSON = response.data
-      localStorage.setItem('token', token)
+      //localStorage.setItem('token', token)
     })
     .catch(function (error) {
       console.log('error');
@@ -125,14 +141,6 @@ export default function SignIn() {
       console.log(responsedJSON);
     });  
   }
-  //Open Dailog
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
       <div className={classes.container}>
@@ -144,6 +152,7 @@ export default function SignIn() {
           密碼 
         </Typography>   
           <Input
+            onChange={event => setPassword(event.target.value)}
             inputRef={register}
             className={classes.InputBackground}
             id="password"
@@ -157,6 +166,7 @@ export default function SignIn() {
           確認密碼
         </Typography>  
           <Input
+             onChange={event => setComfirm(event.target.value)}
             className={classes.InputBackground}
             id="confirm"
             label="請重新輸入密碼 "
@@ -176,16 +186,16 @@ export default function SignIn() {
         onClose={handleClose}
       >
         <DialogTitle>
-        <Typography className={classes.DailogTitle}>密碼更新成功</Typography>
+        <Typography component={'span'} className={classes.DailogTitle}>密碼更新成功</Typography>
         </DialogTitle>
         <DialogContent >
           <DialogContentText>
-            <Typography className={classes.DailogContent}>請重以新的密碼新登入使用。</Typography>
+            <Typography component={'span'} className={classes.DailogContent}>請重以新的密碼新登入使用。</Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary"  >
-          <Typography className={classes.DailogCheck}>完成</Typography>
+          <Typography component={'span'} className={classes.DailogCheck}>完成</Typography>
           </Button>
         </DialogActions>
       </Dialog>

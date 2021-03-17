@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     width: '-webkit-fill-available',
-    height: '48',
+    height: '48px',
     margin: '56px 0 0',
-    padding: '12px 172px 12px 174px',
     backgroundColor: '#00d04c',
     color: '#ffffff',
     borderRadius: 4
@@ -35,21 +34,21 @@ const useStyles = makeStyles((theme) => ({
     //backgroundColor:'#66CBBA'
   },
   MaterialIconsBlackArrowback :{
-    width: '24',
-    height: '24',
+    width: '24px',
+    height: '24px',
     color: '#00d04c',
     margin: '0 297px 61px 0'
   },
   InputBackground:{
     width: '-webkit-fill-available',
-    height: '40',
+    height: '40px',
     margin: '1px 0 0',
     padding: '9px 0 0',
     borderColor:'#232323',
   },
   Title:{
-    width: '98',
-    height: '36',
+    width: '98px',
+    height: '36px',
     margin: '0 281px 31px 0',
     fontFamily: "NotoSansCJKtc",
     fontSize: '24px',
@@ -59,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323'
   },
   Text:{
-    width: '66',
-    height:'24',
+    width: '66px',
+    height:'24px',
     margin: '0 313px 1px 0',
     fontSize: '16px',
     fontWeight: '500',
@@ -71,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323',
   },
   ErrorInfo:{
-    width: '58',
-    height: '21',
+    width: '58px',
+    height: '21px',
     margin: '16px 263px 56px 0',
     fontFamily: "NotoSansCJKtc",
     fontSize: '14px',
@@ -84,8 +83,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#ff3b30',
   },
   ForgotInfo:{
-    width: '58',
-    height: '21',
+    width: '58px',
+    height: '21px',
     fontFamily: "NotoSansCJKtc",
     margin: '-75px 0 56px 263px',
     fontSize: '14px',
@@ -105,14 +104,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [email, setEmail] = React.useState('');
   const classes = useStyles();
   const { register, handleSubmit } = useForm()
   const axios = require('axios');
   let responsedJSON;
   let back = useHistory();
   let GoNext = useHistory();
+  let GoVerify = useHistory();
   function ResetPassword() {
-    GoNext.push("/resetPassword");
+    GoNext.push("/Verify2");
   }
   function onChange(value) {
     console.log("Captcha value:", value);
@@ -120,7 +121,9 @@ export default function SignIn() {
   function backhandleClick() {
     back.push("/login1_1");
   }
-
+  function Vertify() {
+    GoVerify.push("/Verify");
+  }
   // API POST
   const onSubmit = async (data) => {
     console.log(data);
@@ -129,7 +132,8 @@ export default function SignIn() {
       console.log('correct');
       const { token } = response.data;
       responsedJSON = response.data
-      localStorage.setItem('token', token)
+      localStorage.setItem('tokenT', token)//不占用token 需討論解決方式
+      localStorage.setItem('Email', email)
       ResetPassword()
     })
     .catch(function (error) {
@@ -151,6 +155,7 @@ export default function SignIn() {
           電子信箱 
         </Typography>   
           <Input
+            onChange={event => setEmail(event.target.value)}
             inputRef={register}
             className={classes.InputBackground}
             id="email"
