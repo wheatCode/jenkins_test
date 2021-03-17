@@ -19,6 +19,7 @@ const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 const SignIn = lazy(() => import('../pages/HikingFrontend/SignIn'))
 const Home3 = lazy(() => import('../pages/HikingFrontend/Home3'))
 const Verify2 = lazy(() => import('../pages/HikingFrontend/Verify2'))
+const Collection = lazy(() => import('../pages/HikingFrontend/Collection'))
 
 const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'))
 const SearchQuick = lazy(() => import('../pages/SearchQuick/SearchQuick'))
@@ -27,10 +28,12 @@ const PrivacyPolicy = lazy(()=> import('../pages/PrivacyPolicy/PrivacyPolicy'))
 const AboutUs =lazy(()=>import('../pages/AboutUs/AboutUs'))
 const ColumnPage = lazy(() => import('../pages/ColumnPage/ColumnPage'))
 
+
 const Login1_1 = lazy(() => import('../pages/HikingFrontend/Login1_1'))
 const Login1_2 = lazy(() => import('../pages/HikingFrontend/Login1_2'))
 const Register0_1 = lazy(() => import('../pages/HikingFrontend/Register0_1'))
 const ResetPassword = lazy(() => import('../pages/HikingFrontend/ResetPassword'))
+
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
@@ -40,6 +43,7 @@ const routes = [
   <UnauthorizedRoute path="/login1_2" redirectTo="/" exact component={Login1_2} />,
   <UnauthorizedRoute path="/register0_1" redirectTo="/" exact component={Register0_1} />,
   <UnauthorizedRoute path="/resetPassword" redirectTo="/" exact component={ResetPassword} />,
+
   <UnauthorizedRoute
     path="/password_reset"
     redirectTo="/"
