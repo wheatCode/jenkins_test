@@ -170,11 +170,10 @@ export default function Verify2(props){
           console.log(code);
           await api.post('api/password/confirm', code).then(function (response) {
             console.log('驗證碼正確');
-            const {responseToken} = response.data;
-            localStorage.setItem('token',responseToken)
+            console.log(response.data);
+            localStorage.setItem('token', JSON.stringify(response.data));
+            console.log(JSON.parse(localStorage.getItem('token')));
             console.log('得到token!');
-            setToken(responseToken);
-            console.log(token);
             console.log('ready to go');
             history.push('/ResetPassword')
           })
