@@ -134,42 +134,40 @@ const SignUp = () => {
   }
 
   return (
-    <Page>
-      <div className={classes.container}>
-        <ArrowBackIcon className={classes.arrow} />
-        <div className={classes.title}>註冊帳號</div>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
-          <label className={classes.label}>電子信箱</label>
-          <Input name="email" placeholder="請輸入電子信箱" fullWidth inputRef={register({ required: true })} />
-          <div className={classes.errorInfo}>{errors.email && "請輸入正確Email"}</div>
-          <label className={classes.label}>密碼</label><br />
-          <Input name="password" type="password" placeholder="請輸入密碼" fullWidth inputRef={
-                                                                          register({ 
-                                                                            required: true,
-                                                                            min: 8
-                                                                          })} />                                                             
-          <div className={classes.errorInfo}>{errors.password && "密碼必須包含8個字元以上"}</div>
-          <label className={classes.label}>確認密碼</label><br />
-          <Input placeholder="請重新輸入密碼" name="password_repeat" type="password" fullWidth inputRef={register({ 
-                                                                  validate: value =>
-                                                                  value === password.current || "密碼不一致！" 
-                                                                  })} />
-          <div className={classes.errorInfo}>{errors.password_repeat && <p>{errors.password_repeat.message}</p>}</div>
-          <div className={classes.privacyInfo}>使用這個應用程式前，請先詳閱「Go Hiking」的
-          《<span style={{ color: '#007aff' }}>隱私權政策</span>》及《<span style={{ color: '#007aff' }}>服務條款</span>》
-        </div>
-          
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-          >
-            同意並註冊
-          </Button>
-        </form>
+    <div className={classes.container}>
+      <ArrowBackIcon className={classes.arrow} onClick={history.push("/Signin")} />
+      <div className={classes.title}>註冊帳號</div>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
+        <label className={classes.label}>電子信箱</label>
+        <Input name="email" placeholder="請輸入電子信箱" fullWidth inputRef={register({ required: true })} />
+        <div className={classes.errorInfo}>{errors.email && "請輸入正確Email"}</div>
+        <label className={classes.label}>密碼</label><br />
+        <Input name="password" type="password" placeholder="請輸入密碼" fullWidth inputRef={
+                                                                        register({ 
+                                                                          required: true,
+                                                                          min: 8
+                                                                        })} />                                                             
+        <div className={classes.errorInfo}>{errors.password && "密碼必須包含8個字元以上"}</div>
+        <label className={classes.label}>確認密碼</label><br />
+        <Input placeholder="請重新輸入密碼" name="password_repeat" type="password" fullWidth inputRef={register({ 
+                                                                validate: value =>
+                                                                value === password.current || "密碼不一致！" 
+                                                                })} />
+        <div className={classes.errorInfo}>{errors.password_repeat && <p>{errors.password_repeat.message}</p>}</div>
+        <div className={classes.privacyInfo}>使用這個應用程式前，請先詳閱「Go Hiking」的
+        《<span style={{ color: '#007aff' }}>隱私權政策</span>》及《<span style={{ color: '#007aff' }}>服務條款</span>》
       </div>
-    </Page>
+        
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className={classes.submit}
+        >
+          同意並註冊
+        </Button>
+      </form>
+    </div>
   )
 }
 

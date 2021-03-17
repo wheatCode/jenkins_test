@@ -113,8 +113,7 @@ export default function ImgMediaCard() {
   function GoToLogin1_1() {
     back.push("/login1_1");
   }
-  return (
-    
+  return (   
          
       <div className= {classes.container} style={{objectFit: "cover"}}>
         <div style={{
