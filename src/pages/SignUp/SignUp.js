@@ -132,7 +132,7 @@ const SignUp = () => {
       console.log(responsedJSON);
     });  
   }
-
+ 
   function backhandleClick() {
     history.push("/signin");
   }
