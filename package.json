@@ -10,7 +10,7 @@
     "antd": "^4.12.3",
     "axios": "^0.21.1",
     "base-shell": "1.x",
-    "craco-plugin-scoped-css": "^1.1.0",
+    "craco-plugin-scoped-css": "^1.1.1",
     "font-awesome": "^4.7.0",
     "github-markdown-css": "4.x",
     "intl": "1.x",

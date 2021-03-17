@@ -191,7 +191,7 @@ export default function HomePage() {
 
           <Swiper
             className={classes.swiper}
-            spaceBetween={25}
+            spaceBetween={25 }
             slidesPerView={6}
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
