@@ -259,10 +259,10 @@ export default function Verify2(props){
 
             <Typography style={{margin: '16px auto 0 ',color: '#ff3b30' }}>{error} </Typography>
             <Typography style={{margin: '0 auto 0 ',color: '#000000' }}>{makesure} </Typography>
-            <Button disabled= {state.submitted} onClick={continueButton}  variant = "contained"  style={{backgroundColor: '#00d04c',color: "#ffffff", fontWeight:"700" , borderColor: "#00d04c", width:"379px", height: "48px", margin: "27px auto 0", borderRadius: '4px'}}>
+            <Button disabled= {state.submitted} onClick={continueButton}  variant = "contained"  style={{backgroundColor: '#00d04c',color: "#ffffff", fontWeight:"700" , borderColor: "#00d04c", width: "92%",maxWidth:"379px", Height: "48px", margin: "27px auto 0", borderRadius: '4px'}}>
               繼續
             </Button>
-            <Button variant = "outlined" onClick={resentButton} style={{color: "#00d04c", fontWeight:"700" , borderColor: "#00d04c", width:"379px", height: "48px", margin: "24px auto 0", }}>
+            <Button variant = "outlined" onClick={resentButton} style={{color: "#00d04c", fontWeight:"700" , borderColor: "#00d04c",width: "92%",maxWidth:"379px", Height: "48px", margin: "24px auto 0", }}>
               重新發送驗證碼
             </Button>
         </div>
