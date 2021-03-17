@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState}from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from "react-router-dom";
@@ -121,9 +121,7 @@ export default function SignIn() {
   function backhandleClick() {
     back.push("/login1_1");
   }
-  function Vertify() {
-    GoVerify.push("/Verify");
-  }
+
   // API POST
   const onSubmit = async (data) => {
     console.log(data);
@@ -132,8 +130,9 @@ export default function SignIn() {
       console.log('correct');
       const { token } = response.data;
       responsedJSON = response.data
-      localStorage.setItem('tokenT', token)//不占用token 需討論解決方式
-      localStorage.setItem('Email', email)
+      localStorage.setItem('token', token)
+      localStorage.setItem('email',email)
+
       ResetPassword()
     })
     .catch(function (error) {
@@ -144,6 +143,12 @@ export default function SignIn() {
       console.log(responsedJSON);
     });  
   }
+
+  const[email, setEmail] = useState(-1);
+  const handleChange = (event) =>{
+    setEmail(event.target.value);
+  }
+
   return (
       <div className={classes.container}>
         <ArrowBackIcon className={classes.MaterialIconsBlackArrowback} onClick={backhandleClick} ></ArrowBackIcon>
@@ -158,6 +163,7 @@ export default function SignIn() {
             onChange={event => setEmail(event.target.value)}
             inputRef={register}
             className={classes.InputBackground}
+            onChange = {event => handleChange(event)}
             id="email"
             label="請輸入你的電子信箱"
             name="email"
