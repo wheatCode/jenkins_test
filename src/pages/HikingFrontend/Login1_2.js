@@ -131,6 +131,7 @@ export default function SignIn() {
       const { token } = response.data;
       responsedJSON = response.data
       localStorage.setItem('token', token)
+      localStorage.setItem('email',email)
       ResetPassword()
     })
     .catch(function (error) {
@@ -141,6 +142,12 @@ export default function SignIn() {
       console.log(responsedJSON);
     });  
   }
+
+  const[email, setEmail] = useState(-1);
+  const handleChange = (event) =>{
+    setEmail(event.target.value);
+  }
+
   return (
       <div className={classes.container}>
         <ArrowBackIcon className={classes.MaterialIconsBlackArrowback} onClick={backhandleClick} ></ArrowBackIcon>
@@ -154,6 +161,7 @@ export default function SignIn() {
           <Input
             inputRef={register}
             className={classes.InputBackground}
+            onChange = {event => handleChange(event)}
             id="email"
             label="請輸入你的電子信箱"
             name="email"
