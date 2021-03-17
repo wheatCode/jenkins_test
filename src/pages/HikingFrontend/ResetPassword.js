@@ -155,6 +155,7 @@ export default function SignIn() {
       console.log('correct');
       //const { token } = response.data;
       responsedJSON = response.data
+      handleClickOpen(true);
       //localStorage.setItem('token', token)
     })
     .catch(function (error) {
@@ -171,7 +172,7 @@ export default function SignIn() {
         <Typography className={classes.Title} textalign="left">
           重設密碼
         </Typography>
-        <form className={classes.form}onSubmit={handleSubmit(onSubmit)} >
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
         <Typography className={classes.Text}  textalign="left">
           密碼 
         </Typography>   
@@ -209,28 +210,28 @@ export default function SignIn() {
             type="submit"
             variant="contained"
             className={classes.submit}
-            onClick={handleClickOpen }
+            // onClick={handleClickOpen }
           >
           繼續
         </Button>
         <Dialog
-        maxWidth={maxWidth}
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>
-        <Typography component={'span'} className={classes.DailogTitle}>密碼更新成功</Typography>
-        </DialogTitle>
-        <DialogContent >
-          <DialogContentText>
-            <Typography component={'span'} className={classes.DailogContent}>請重新以新的密碼登入使用。</Typography>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary"  >
-          <Typography component={'span'} className={classes.DailogCheck}>完成</Typography>
-          </Button>
-        </DialogActions>
+          maxWidth={maxWidth}
+          open={open}
+          onClose={handleClose}
+        >
+          <DialogTitle>
+          <Typography component={'span'} className={classes.DailogTitle}>密碼更新成功</Typography>
+          </DialogTitle>
+          <DialogContent >
+            <DialogContentText>
+              <Typography component={'span'} className={classes.DailogContent}>請重新以新的密碼登入使用。</Typography>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary"  >
+            <Typography component={'span'} className={classes.DailogCheck}>完成</Typography>
+            </Button>
+          </DialogActions>
       </Dialog>
       </form>
     </div>
