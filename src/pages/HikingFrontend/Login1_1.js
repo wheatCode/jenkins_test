@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input'
 import Link from '@material-ui/core/Link';
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -9,7 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Page from 'material-ui-shell/lib/containers/Page'
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
+import { useForm } from 'react-hook-form';
 import axios from "axios";
+import Password from 'antd/lib/input/Password';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -85,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     width: '58',
     height: '21',
     fontFamily: "NotoSansCJKtc",
-    margin: '-75px 0 56px 263px',
+    margin: '-77px 0 56px 263px',
     fontSize: '14px',
     fontWeight: '500',
     fontStretch: 'normal',
@@ -104,47 +107,67 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { register, handleSubmit } = useForm()
+  const axios = require('axios');
+  //JSON
+  let responsedJSON;
+  //Go to ? Page
+  let goNext = useHistory();
+  function GoToLogin1_2() {
+    goNext.push("/home");
+  }
   let back = useHistory();
   function backhandleClick() {
     back.push("/signin");
   }
-  function GoToLogin1_2() {
-    back.push("/login1_2");
+  // API POST
+  const onSubmit = async (data) => {
+    console.log(data);
+    await axios.post('https://gohiking-server.herokuapp.com/api/login', data)
+    .then(function (response) {
+      console.log('correct');
+      const { token } = response.data;
+      responsedJSON = response.data
+      localStorage.setItem('token', token)
+      GoToLogin1_2()
+    })
+    .catch(function (error) {
+      console.log('error');
+      responsedJSON = error.response.data;
+    })
+    .finally(function () {
+      console.log(responsedJSON);
+    });  
   }
 
   return (
-    <Page>
       <div className={classes.container}>
         <ArrowBackIcon className={classes.MaterialIconsBlackArrowback} onClick={backhandleClick} ></ArrowBackIcon>
-        <Typography className={classes.Title} textAlign="left">
+        <Typography className={classes.Title} textalign="left">
           登入
         </Typography>
-        <FormControl className={classes.form} noValidate>
-        <Typography className={classes.Text}  textAlign="left">
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
+        <Typography className={classes.Text}  textalign="left">
           電子信箱 
         </Typography>   
           <TextField
-            InputLabelProps={{
-              className: classes.ModifyTextFieldColor
-            }}
+            inputRef={register}
             className={classes.InputBackground}
             id="email"
-            label="請輸入你的電子信箱"
+            placeholder="請輸入你的電子信箱"
             name="email"
           />
-        <Typography className={classes.ErrorInfo}  textAlign="left">
+        <Typography className={classes.ErrorInfo}  textalign="left">
           錯誤資訊
         </Typography>  
-        <Typography className={classes.Text}  textAlign="left">
+        <Typography className={classes.Text}  textalign="left">
           密碼
         </Typography>  
           <TextField
-            InputLabelProps={{
-              className: classes.ModifyTextFieldColor
-            }}
+            inputRef={register}
             className={classes.InputBackground}
             id="password"
-            label="請輸入你的密碼 "
+            placeholder="請輸入你的密碼"
             name="password"
           />
         <Typography className={classes.ErrorInfo} >
@@ -154,17 +177,15 @@ export default function SignIn() {
             <Link  onClick={GoToLogin1_2}>
               <Typography  className={classes.ForgotInfo} >忘記密碼?</Typography>
             </Link>
-          </Grid>
+        </Grid>
         <Button
             type="submit"
-            fullWidth
             variant="contained"
             className={classes.submit}
           >
           登入
         </Button>
-      </FormControl>
+      </form>
     </div>
-  </Page>
   );
 }
