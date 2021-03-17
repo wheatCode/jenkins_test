@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input'
 import { useForm } from 'react-hook-form';
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -97,18 +98,38 @@ const useStyles = makeStyles((theme) => ({
     fontWeight:500,
     borderColor:'#007aff'
   },
+  ErrorInfo:{
+    width: '100%',
+    height: '21px',
+    margin: '16px 263px 56px 0',
+    fontFamily: "NotoSansCJKtc",
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '0.5px',
+    color: '#ff3b30',
+  },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [maxWidth] = React.useState('xs');
-  const { register, handleSubmit } = useForm()
-  const [password, setPassword] = React.useState('');
+  const { register, handleSubmit, errors, watch } = useForm()
+  const password = useRef({});
+  password.current = watch("password", "");
+  // const [password, setPassword] = React.useState(''); 
   const [comfirm, setComfirm] = React.useState('');
+  const history = useHistory()
   const axios = require('axios');
   let responsedJSON;
-  
+
+  function backhandleClick() {
+    history.push("/signin");
+  }
+
   //Open Dailog
   const handleClickOpen = () => {
     setOpen(true);
@@ -116,11 +137,14 @@ export default function SignIn() {
 
   const handleClose = () => {
     setOpen(false);
+    // backhandleClick()
   };
   //get token from verify
-  console.log('token: ' + localStorage.getItem('token'));
+  const token = localStorage.getItem('token')
+  console.log(token.substring(10, token.length - 2))
+  // console.log('token: ' + localStorage.getItem('token'));
   const headers = {
-    'Authorization': 'Bearer '+localStorage.getItem('token')
+    'Authorization': 'Bearer '+token.substring(10, token.length - 2)
   }
   console.log(headers);
   // API POST
@@ -152,26 +176,35 @@ export default function SignIn() {
           密碼 
         </Typography>   
           <Input
-            onChange={event => setPassword(event.target.value)}
-            inputRef={register}
+            // onChange={event => setPassword(event.target.value)}
+            inputRef={register({ required: true, minLength: 8 })}
             className={classes.InputBackground}
             id="password"
             label="請輸入新的密碼"
             name="password"
+            type="password"
           />
-        <Typography className={classes.Hint}  textalign="left">
-          密碼必須包含八個字元以上
-        </Typography>  
+        <Typography className={classes.ErrorInfo} >
+          {errors.password && "密碼必須包含8個字元以上"}
+        </Typography> 
         <Typography className={classes.Text}  textalign="left">
           確認密碼
         </Typography>  
           <Input
-             onChange={event => setComfirm(event.target.value)}
+            onChange={event => setComfirm(event.target.value)}
             className={classes.InputBackground}
             id="confirm"
             label="請重新輸入密碼 "
             name="confirm"
+            type="password"
+            inputRef={register({ 
+              validate: value =>
+              value === password.current || "密碼不一致！" 
+              })}
           />
+        <Typography className={classes.ErrorInfo}>
+          {errors.confirm && <p>{errors.confirm.message}</p>}
+        </Typography> 
         <Button
             type="submit"
             variant="contained"
@@ -190,7 +223,7 @@ export default function SignIn() {
         </DialogTitle>
         <DialogContent >
           <DialogContentText>
-            <Typography component={'span'} className={classes.DailogContent}>請重以新的密碼新登入使用。</Typography>
+            <Typography component={'span'} className={classes.DailogContent}>請重新以新的密碼登入使用。</Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

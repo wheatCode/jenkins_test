@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#232323',
   },
   ErrorInfo:{
-    width: '58px',
+    width: '100%',
     height: '21px',
     margin: '16px 263px 56px 0',
     fontFamily: "NotoSansCJKtc",
@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ff3b30',
   },
   ForgotInfo:{
-    width: '66px',
+    width: '100px',
     height: '21px',
     fontFamily: "NotoSansCJKtc",
     margin: '-77px 0 56px 263px',
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, errors } = useForm()
   const axios = require('axios');
   //JSON
   let responsedJSON;
@@ -155,27 +155,28 @@ export default function SignIn() {
           電子信箱 
         </Typography>   
           <TextField
-            inputRef={register}
+            inputRef={register({ required: true })}
             className={classes.InputBackground}
             id="email"
             placeholder="請輸入你的電子信箱"
             name="email"
           />
         <Typography className={classes.ErrorInfo}  textalign="left">
-          錯誤資訊
+          {errors.email && "請輸入正確Email"}
         </Typography>  
         <Typography className={classes.Text}  textalign="left">
           密碼
         </Typography>  
           <TextField
-            inputRef={register}
+            inputRef={register({ required: true, minLength: 8 })}
             className={classes.InputBackground}
             id="password"
             placeholder="請輸入你的密碼"
             name="password"
+            type="password"
           />
         <Typography className={classes.ErrorInfo} >
-          錯誤資訊
+          {errors.password && "密碼必須包含8個字元以上"}
         </Typography>  
         <Grid container justify="flex-end">
             <Link  onClick={GoToLogin1_2}>
