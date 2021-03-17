@@ -157,9 +157,6 @@ const useStyles = makeStyles((theme) => ({
     }
 
     return (
-        
-      <Page>
-          
         <div className={classes.container}>
           <Typography className={classes.Title } >
             建立個人資料
@@ -257,6 +254,5 @@ const useStyles = makeStyles((theme) => ({
           </Button>
         </form>
       </div>
-    </Page>
     );
   }

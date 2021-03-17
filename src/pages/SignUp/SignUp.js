@@ -149,7 +149,7 @@ const SignUp = () => {
         <Input name="password" type="password" placeholder="請輸入密碼" fullWidth inputRef={
                                                                         register({ 
                                                                           required: true,
-                                                                          min: 8
+                                                                          minLength: 8
                                                                         })} />                                                             
         <div className={classes.errorInfo}>{errors.password && "密碼必須包含8個字元以上"}</div>
         <label className={classes.label}>確認密碼</label><br />
