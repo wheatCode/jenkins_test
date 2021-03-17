@@ -189,9 +189,13 @@ export default function Verify2(props){
           });  
         }
         //這裡是重寄驗證碼按鈕的部分
+        const headers = {
+          'email': localStorage.getItem('email')
+        }
         const resentButton = async() =>{
           setError('');
-          await api.post('api/password/forget', ).then(function (response) {
+          console.log(headers);
+          await api.post('api/password/forget', headers).then(function (response) {
             console.log('重新寄送成功!');
             setMakesure('重新寄送成功!');
             responsedJson = response.data;
