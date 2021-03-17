@@ -1,19 +1,21 @@
 import Button from '@material-ui/core/Button'
 import Page from 'material-ui-shell/lib/containers/Page'
 import Paper from '@material-ui/core/Paper'
-import React, { useState } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Input from '@material-ui/core/Input'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from 'base-shell/lib/providers/Auth'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { useIntl } from 'react-intl'
 import { useMenu } from 'material-ui-shell/lib/providers/Menu'
 import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { DateRange } from '@material-ui/icons'
+import * as Yup from 'yup';
+
 
 const useStyles = makeStyles({
   container: {
@@ -55,8 +57,8 @@ const useStyles = makeStyles({
     color: '#232323',
   },
   errorInfo: {
-    width: '58px',
-    height: '21px',
+    width: '100%',
+    height: '0px',
     margin: '16px 321px 55px 0px',
     fontFamily: 'NotoSansCJKtc',
     fontSize: '14px',
@@ -105,15 +107,12 @@ const useStyles = makeStyles({
 const SignUp = () => {
   const classes = useStyles()
   const history = useHistory()
-  const [userEmail, setUserEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const { toggleThis } = useMenu()
-  const { setAuth } = useAuth()
-  const { register, handleSubmit } = useForm()
-
+  const { register, handleSubmit, errors, watch } = useForm()
+  const password = useRef({});
+  password.current = watch("password", "");
   const axios = require('axios');
   let responsedJSON;
+
   // API POST
   const onSubmit = async (data) => {
     console.log(data);
@@ -123,6 +122,7 @@ const SignUp = () => {
       const { token } = response.data;
       responsedJSON = response.data
       localStorage.setItem('token', token)
+      history.push("/register0_1");
     })
     .catch(function (error) {
       console.log('error');
@@ -133,12 +133,6 @@ const SignUp = () => {
     });  
   }
 
-  //Go Next
-  let next = useHistory();
-  function GoToRegister0_1() {
-    next.push("/register0_1");
-  }
-
   return (
     <Page>
       <div className={classes.container}>
@@ -146,13 +140,21 @@ const SignUp = () => {
         <div className={classes.title}>註冊帳號</div>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
           <label className={classes.label}>電子信箱</label>
-          <Input name="email" placeholder="請輸入電子信箱" fullWidth inputRef={register} />
-          <div className={classes.errorInfo}>錯誤資訊</div>
+          <Input name="email" placeholder="請輸入電子信箱" fullWidth inputRef={register({ required: true })} />
+          <div className={classes.errorInfo}>{errors.email && "請輸入正確Email"}</div>
           <label className={classes.label}>密碼</label><br />
-          <Input name="password" placeholder="請輸入密碼" fullWidth inputRef={register} />
-          <div className={classes.passwordInfo}>密碼必須包含8個字元以上</div>
+          <Input name="password" type="password" placeholder="請輸入密碼" fullWidth inputRef={
+                                                                          register({ 
+                                                                            required: true,
+                                                                            min: 8
+                                                                          })} />                                                             
+          <div className={classes.errorInfo}>{errors.password && "密碼必須包含8個字元以上"}</div>
           <label className={classes.label}>確認密碼</label><br />
-          <Input placeholder="請重新輸入密碼" fullWidth />
+          <Input placeholder="請重新輸入密碼" name="password_repeat" type="password" fullWidth inputRef={register({ 
+                                                                  validate: value =>
+                                                                  value === password.current || "密碼不一致！" 
+                                                                  })} />
+          <div className={classes.errorInfo}>{errors.password_repeat && <p>{errors.password_repeat.message}</p>}</div>
           <div className={classes.privacyInfo}>使用這個應用程式前，請先詳閱「Go Hiking」的
           《<span style={{ color: '#007aff' }}>隱私權政策</span>》及《<span style={{ color: '#007aff' }}>服務條款</span>》
         </div>
@@ -161,7 +163,6 @@ const SignUp = () => {
             type="submit"
             fullWidth
             variant="contained"
-            onClick={GoToRegister0_1}
             className={classes.submit}
           >
             同意並註冊

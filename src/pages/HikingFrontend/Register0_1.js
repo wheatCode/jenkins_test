@@ -132,11 +132,10 @@ const useStyles = makeStyles((theme) => ({
       birth: inputValue,
       live: live
     }
-    //Test Output JSON
     const headers = {
       'Authorization': 'Bearer '+localStorage.getItem('token')
     }
-    console.log(testOuputObj);
+    console.log(headers);
     const axios = require('axios');
     let responsedJson; // 將回傳的JSON先定義為變數，後面再賦值
     const onSubmit = async(data) => {
