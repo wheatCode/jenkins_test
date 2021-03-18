@@ -13,7 +13,8 @@ import {
   Divider,
   Grid,
   InputLabel,
-  MenuItem
+  MenuItem,
+  NativeSelect
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import AppBar from "@material-ui/core/AppBar";
@@ -29,15 +30,6 @@ import { countryInfo } from "../../data/countryInfo";
 import PersonalPageLogic from "./personalPageLogic";
 import { useHistory } from "react-router";
 import ClipLoader from "react-spinners/ClipLoader";
-
-const lightTheme = createMuiTheme({
-  palette: {
-    type: "light",
-    primary: {
-      main: "#00d04c"
-    }
-  }
-});
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,20 +104,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function PersonalPage(props) {
+function EditAccount(props) {
   const history = useHistory();
-
-  const Logix = PersonalPageLogic();
+  const pData = props.location.state.pData;
+  const {
+    personalInfo,
+    handleNameChange,
+    handleSexChange,
+    handleTelChange,
+    handleBirthChange,
+    handleCountyChange,
+    updateInfo,
+    isLoading,
+    validations
+  } = PersonalPageLogic(pData);
   const croppedImage =
     props.location.state === undefined
       ? null
       : props.location.state.croppedImage;
-  if (croppedImage) {
-    props.location.state.croppedImage = null;
-    if (croppedImage.search("blob:") == -1) {
-      croppedImage = null;
-    }
-  }
   const {
     isOpen,
     openDialog,
@@ -133,6 +129,22 @@ function PersonalPage(props) {
     inputRef,
     triggerImageInput
   } = AvatarUploadDialogLogic();
+  const collectData = async () => {
+    const data = {
+      name: personalInfo.name,
+      gender: personalInfo.gender === "男" ? 1 : 0,
+      phone_number: personalInfo.phone_number,
+      birth: personalInfo.birth,
+      croppedImage: croppedImage,
+      image: personalInfo.profile_photo_url,
+      county: personalInfo.county.name
+    };
+    const apiResult = await updateInfo(1, data);
+    if (apiResult == 200)
+      history.push({
+        pathname: "/personalPage"
+      });
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -149,18 +161,19 @@ function PersonalPage(props) {
           <Typography variant="h6" className={classes.title}>
             個人檔案
           </Typography>
-          <IconButton
+          <Button
+            className={classes.finishButton}
             color="inherit"
             edge="end"
             onClick={() => {
-              history.push({
-                pathname: "/editAccount",
-                state: { pData: Logix.personalInfo }
-              });
+              if (!validations.nameValidation && !validations.genderValidation && !validations.phoneValidation) {
+                console.log("yay");
+                collectData();
+              }
             }}
           >
-            <EditIcon />
-          </IconButton>
+            完成
+          </Button>
         </Toolbar>
       </AppBar>
       <Grid
@@ -184,24 +197,18 @@ function PersonalPage(props) {
               <Avatar
                 // alt="Profile Picture"
                 src={
-                  croppedImage == null
-                    ? Logix.personalInfo.profile_photo_url
-                    : croppedImage
+                  croppedImage ? croppedImage : personalInfo.profile_photo_url
                 }
                 className={classes.avatar}
               />
-              {/* {isReadonly ? (
-                <></>
-              ) : (
-                <div
-                  class={classes.avatarOverlay}
-                  onClick={() => {
-                    openDialog();
-                  }}
-                >
-                  更換
-                </div>
-              )} */}
+              <div
+                class={classes.avatarOverlay}
+                onClick={() => {
+                  openDialog();
+                }}
+              >
+                更換
+              </div>
             </div>
           </Grid>
           <Grid
@@ -213,37 +220,16 @@ function PersonalPage(props) {
             justify="flex-start"
             spacing={0.5}
           >
-            {true ? (
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="h6" style={{ color: "#232323" }}>
-                    {Logix.personalInfo.name
-                      ? Logix.personalInfo.name
-                      : "loading"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h7" style={{ color: "#919191" }}>
-                    {Logix.personalInfo.email
-                      ? Logix.personalInfo.email
-                      : "loading"}
-                  </Typography>
-                </Grid>
-              </>
-            ) : (
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="h7" style={{ color: "#919191" }}>
-                    {Logix.personalInfo.email
-                      ? Logix.personalInfo.email
-                      : "loading"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <div style={{ height: 32 }} />
-                </Grid>
-              </>
-            )}
+            <>
+              <Grid item xs={12}>
+                <Typography variant="h7" style={{ color: "#919191" }}>
+                  {personalInfo.email ? personalInfo.email : "loading"}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <div style={{ height: 32 }} />
+              </Grid>
+            </>
           </Grid>
         </Grid>
         <Grid
@@ -276,10 +262,14 @@ function PersonalPage(props) {
               <TextField
                 id="standard-basic"
                 placeholder="姓名"
+                error={validations.nameValidation ? true : false}
+                helperText={
+                  validations.nameValidation ? validations.nameValidation : ""
+                }
                 className={classes.textfield}
+                onChange={handleNameChange}
                 inputProps={{
-                  value: Logix.personalInfo.name,
-                  readOnly: true
+                  value: personalInfo.name
                 }}
               />
             </Grid>
@@ -291,11 +281,17 @@ function PersonalPage(props) {
             <Grid item xs={9}>
               <TextField
                 id="standard-basic"
+                error={validations.genderValidation ? true : false}
+                helperText={
+                  validations.genderValidation
+                    ? validations.genderValidation
+                    : ""
+                }
                 placeholder="性別"
+                onChange={handleSexChange}
                 className={classes.textfield}
                 inputProps={{
-                  value: Logix.personalInfo.gender,
-                  readOnly: true
+                  value: personalInfo.gender
                 }}
               />
             </Grid>
@@ -305,32 +301,34 @@ function PersonalPage(props) {
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <Select
+              <NativeSelect
                 labelId="country-code"
                 id="country-code"
                 style={{ width: "30%" }}
                 className={classes.textfield}
-                inputProps={{
-                  readOnly: true
-                }}
+                inputProps={{}}
               >
                 {countryInfo.map(info => (
-                  <MenuItem
+                  <option
                     key={info.countryCode + info.countryName}
                     value={info.phoneCode}
                   >
                     {info.phoneCode}
-                  </MenuItem>
+                  </option>
                 ))}
-              </Select>
+              </NativeSelect>
               <TextField
                 id="standard-basic"
                 placeholder="手機"
+                error={validations.phoneValidation ? true : false}
+                helperText={
+                  validations.phoneValidation ? validations.phoneValidation : ""
+                }
                 style={{ width: "70%" }}
                 className={classes.textfield_phone}
+                onChange={handleTelChange}
                 inputProps={{
-                  value: Logix.personalInfo.phone_number,
-                  readOnly: true
+                  value: personalInfo.phone_number
                 }}
               />
             </Grid>
@@ -345,12 +343,12 @@ function PersonalPage(props) {
                 placeholder="生日"
                 className={classes.textfield}
                 type="date"
+                onChange={handleBirthChange}
                 InputLabelProps={{
                   shrink: true
                 }}
                 inputProps={{
-                  value: Logix.personalInfo.birth,
-                  readOnly: true
+                  value: personalInfo.birth
                 }}
               />
             </Grid>
@@ -363,12 +361,10 @@ function PersonalPage(props) {
               <TextField
                 id="standard-basic"
                 placeholder="居住地"
+                onChange={handleCountyChange}
                 className={classes.textfield}
                 inputProps={{
-                  value: Logix.personalInfo.county
-                    ? Logix.personalInfo.county.name
-                    : "",
-                  readOnly: true
+                  value: personalInfo.county ? personalInfo.county.name : ""
                 }}
               />
             </Grid>
@@ -380,12 +376,13 @@ function PersonalPage(props) {
         triggerImageInput={triggerImageInput}
         closeDialog={closeDialog}
         inputRef={inputRef}
+        pData={personalInfo}
       />
-      <Backdrop className={classes.backdrop} open={Logix.isLoading}>
-        <ClipLoader color={"#36CAAD"} loading={Logix.isLoading} size={150} />
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <ClipLoader color={"#36CAAD"} loading={isLoading} size={150} />
       </Backdrop>
     </div>
   );
 }
 
-export default PersonalPage;
+export default EditAccount;

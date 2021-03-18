@@ -4,6 +4,7 @@ import AuthorizedRoute from 'base-shell/lib/components/AuthorizedRoute/Authorize
 import UnauthorizedRoute from 'base-shell/lib/components/UnauthorizedRoute/UnauthorizedRoute'
 import { Route } from 'react-router-dom'
 import CropAvatar from 'pages/PersonalPage/CropAvatar'
+import EditAccount from 'pages/PersonalPage/EditAccount'
 
 // const SignIn = lazy(() => import('../pages/SignIn/SignIn'))
 const SignUp = lazy(() => import('../pages/SignUp/SignUp'))
@@ -43,6 +44,7 @@ const routes = [
   <AuthorizedRoute path="/list_page_demo" exact component={ListPageDemo} />,
   <AuthorizedRoute path="/tabs_demo" exact component={TabsDemo} />,
   <UnauthorizedRoute path="/personalPage" exact component={PersonalPage} />,
+  <UnauthorizedRoute path="/editAccount" exact component={EditAccount} />,
   <UnauthorizedRoute path="/cropAvatar" exact component={CropAvatar} />,
 
 ]

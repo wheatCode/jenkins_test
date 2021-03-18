@@ -9,6 +9,7 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import AvatarUploadDialogLogic from "./AvatarUploadDialogLogic";
 import { Redirect } from "react-router";
+import axios from "axios";
 
 const styles = theme => ({
   root: {
@@ -45,7 +46,33 @@ const AvatarUploadDialog = props => {
   const closeDialog = props.closeDialog;
   const triggerImageInput = props.triggerImageInput;
   const inputRef = props.inputRef;
+  const pData = props.pData;
+  console.log(pData);
+  const [file, setFile] = useState(null);
 
+  const handleInputChange = event => {
+    console.log(event.target.files[0]);
+    // const file = event.target.files[0];
+    // console.log(file);
+    // var fd = new FormData();
+    // fd.append("image", file);
+    // axios
+    //   .post("https://api.imgur.com/3/image", fd, {
+    //     headers: {
+    //       Authorization: "Client-ID 6bdc55894336124"
+    //     }
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //   });
+    setFile(URL.createObjectURL(event.target.files[0]));
+  };
+  if (file)
+    return (
+      <Redirect
+        to={{ pathname: "/cropAvatar", state: { image: file, pData: pData } }}
+      />
+    );
   return (
     <Dialog
       onClose={closeDialog}
@@ -72,7 +99,9 @@ const AvatarUploadDialog = props => {
           id="avatar_img"
           name="avatar_img"
           accept="image/*"
-          onChange={()=>{}}
+          onChange={event => {
+            handleInputChange(event);
+          }}
           hidden
         />
         <Button
