@@ -22,7 +22,9 @@ const SearchResult = lazy(() => import('../pages/SearchResult/SearchResult'))
 const PrivacyPolicy = lazy(()=> import('../pages/PrivacyPolicy/PrivacyPolicy'))
 const AboutUs =lazy(()=>import('../pages/AboutUs/AboutUs'))
 const ColumnPage = lazy(() => import('../pages/ColumnPage/ColumnPage'))
+const Login1 = lazy(() => import('../pages/HikingFrontend/Login1'))
 const routes = [
+  <UnauthorizedRoute path="/Login1" redirectTo="/" exact component={Login1} />,
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
   <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
   <UnauthorizedRoute
