@@ -9,6 +9,8 @@ import Page from 'material-ui-shell/lib/containers/Page';
 import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm } from 'react-hook-form';
+import { useHistory } from "react-router-dom";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -105,6 +107,8 @@ const useStyles = makeStyles((theme) => ({
     const [inputValue, setInputValue] = useState();
     const [live, setLive] = React.useState('');
     const { handleSubmit } = useForm()
+    const history = useHistory();
+
     const handleChange = (event) => {
       setGender(event.target.value);
     };
@@ -153,13 +157,11 @@ const useStyles = makeStyles((theme) => ({
       })
       .finally(function () {
         console.log(responsedJson);
+        history.push('/signin');
       }); 
     }
 
     return (
-        
-      <Page>
-          
         <div className={classes.container}>
           <Typography className={classes.Title } >
             建立個人資料
@@ -257,6 +259,5 @@ const useStyles = makeStyles((theme) => ({
           </Button>
         </form>
       </div>
-    </Page>
     );
   }
