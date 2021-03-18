@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, GridList, Divider } from "@material-ui/core";
 
@@ -30,14 +30,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TrailList = (props) => {
-  const classes = useStyles();
+const QuickList = (props) => {
+const classes = useStyles();
   //api回傳資料
-  const data = props.data;
+
+const [trails, setTrails] = useState([]); 
+  
+  useEffect(
+    () => {
+
+      if(props.data!==undefined){
+          setTrails(props.data);
+            console.log(props.data);
+      }
+         
+    
+    },
+    [props.data],
+  );
+  
+
   return (
-    <div className={classes.root}>
+      
+   <div className={classes.root}>
       <GridList cellHeight={72} cols={1}>
-        {data.map((trail) => (
+        {trails.map((trail) => (
           <Grid
             key={trail.id}
             container
@@ -66,7 +83,7 @@ const TrailList = (props) => {
                 {trail.title}
               </Grid>
               <Grid item xs={12} className={classes.location}>
-                {trail.location.name}
+                {trail.location}
               </Grid>
               <Grid item xs={12} className={classes.distance}>
                 全程約{trail.distance}公里
@@ -78,7 +95,9 @@ const TrailList = (props) => {
           </Grid>
         ))}
       </GridList>
+
     </div>
+     
   );
 };
-export default TrailList;
+export default QuickList;

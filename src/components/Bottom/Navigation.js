@@ -38,8 +38,8 @@ function Navigation() {
      className={classes.footer}
      >
      
-      <BottomNavigationAction label="首頁" icon={<HomeIcon />} />
-      <BottomNavigationAction label="步道搜尋" icon={<SearchIcon />} />
+      <BottomNavigationAction label="首頁" href="/home" icon={<HomeIcon />} />
+      <BottomNavigationAction label="步道搜尋" href="/searchResult" icon={<SearchIcon />} />
       <BottomNavigationAction label="附近步道"  icon={<LocationOnIcon />} />
       <BottomNavigationAction label="我的最愛"  icon={<FavoriteIcon  />} />
     
