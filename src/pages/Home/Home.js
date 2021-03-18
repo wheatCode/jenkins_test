@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "@material-ui/core";
 // Import Swiper styles
 import "swiper/swiper.scss";
+import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -30,6 +31,7 @@ import family from "../../asset/img/icon-family.png";
 import forest from "../../asset/img/icon-forest.png";
 import sakura from "../../asset/img/icon-sakura.png";
 import { Link } from "react-router-dom";
+import TemporaryDrawer from "../../components/SideBar/Sidebar-menu";
 
 const lightTheme = createMuiTheme({
   palette: {
@@ -48,14 +50,18 @@ const useStyles = makeStyles((theme) => ({
   },
 
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(3),
   },
   rectangle: {
     height: "230px",
+    maxWidth:"100%",
+  },
+  title: {
+    flexGrow: 1,
   },
   marquee: {
     height: "100%",
-    width: "100%",
+    width: "259px",
     backgroundColor: "#000000",
   },
   matitle: {
@@ -71,20 +77,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#00d04c",
   },
   maimg: {
-    width: "342px",
+   
     height: "230px",
   },
   swiper: {
     backgroundColor: "#fffff",
-    height: "112px",
+    height: "112px",    
     textAlign: "center",
     margin: "16px 0 0",
     padding: "8px 0 8px 16px",
-
   },
 
   iconImg: {
     width: "48px",
+  },
+  scarch: {
+    marginLeft: "50%",
   },
 
   retitle: {
@@ -98,13 +106,20 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   text: {
-    width: "164px",
+    maxWidth: "164px",
     fontSize: "14px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   },
 
   time: {
     color: "#919191",
     fontSize: "10px",
+    fontSize: "14px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   },
   Img: {
     height: "96px",
@@ -112,12 +127,18 @@ const useStyles = makeStyles((theme) => ({
   tangle: {
     width: "100%",
     height: "16px",
-
     backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
 }));
 const api = axios.create({
   baseURL: "https://go-hiking-backend-laravel.herokuapp.com/",
+  headers: {
+    "X-Secure-Code": "12345678",
+  },
+});
+const demoapi = axios.create({
+  //測試 api
+  baseURL: "http://0ae14a46960c.ngrok.io",
   headers: {
     "X-Secure-Code": "12345678",
   },
@@ -133,14 +154,34 @@ const obj = {
 export default function HomePage() {
   const classes = useStyles();
   const [collection, setcollection] = useState([]);
-  const searchApi = async () => {
+  const [articles, setarticle] = useState([]);
+
+  //搜尋主題api
+  const collectionApi = async () => {
     await api.get("/api/collection").then((res) => {
       setcollection(res.data);
     });
   };
+
+  //搜尋首頁行程api
+  const articleApi = async () => {
+    await demoapi.get("/api/home").then((res) => {
+      setarticle(res.data.articles);
+    });
+  };
+  const [state, setState] = useState(false);
+  const [anchor] = useState("left");
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === "keydown") return;
+    setState(open);
+  };
+
   useEffect(() => {
-    searchApi();
+    collectionApi();
+    articleApi();
   }, []);
+  console.log(articles);
 
   return (
     <>
@@ -153,20 +194,30 @@ export default function HomePage() {
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="menu"
+                onClick={toggleDrawer(true)}
               >
                 <MenuIcon />
               </IconButton>
+              <Drawer
+                anchor={anchor}
+                open={state}
+                onClose={toggleDrawer(false)}
+              >
+                <TemporaryDrawer />
+              </Drawer>
               <Typography variant="h6" className={classes.title}>
                 Go Hiking
               </Typography>
-              <Button color="inherit"><SearchIcon/></Button>
+              <Button color="inherit">
+                <SearchIcon />
+              </Button>
             </Toolbar>
           </AppBar>
 
           <Swiper
             className={classes.rectangle}
-            spaceBetween={0}
-            slidesPerView={2}
+            spaceBetween={100}//side 之間距離
+            slidesPerView={2}//容器能够同时显示的slides数量
             mousewheel={true}
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
@@ -195,6 +246,8 @@ export default function HomePage() {
             slidesPerView={6}
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
+            showsButtons
+            loop={false}
           >
             {collection.map((collection) => (
               <SwiperSlide>
@@ -217,7 +270,7 @@ export default function HomePage() {
           <Grid className={classes.retitle}>行程推薦</Grid>
           <Swiper
             className={classes.swiper2}
-            spaceBetween={80}
+            spaceBetween={110}
             slidesPerView={3}
             navigation
             pagination={{ clickable: true }}
@@ -225,23 +278,19 @@ export default function HomePage() {
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
           >
-            <SwiperSlide>
-              <Link to={`/columnPage`} className={classes.linkstlye}>
-                <img src={getty} className={classes.Img} />
-                <div className={classes.text}>2020跨年日出秘境步道...</div>
-                <div className={classes.time}>2019-12-11</div>
-              </Link>
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={getty2} className={classes.Img} />
-              <div className={classes.text}>2020跨年日出秘境步道...</div>
-              <div className={classes.time}>2019-12-11</div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={getty3} className={classes.Img} />
-              <div className={classes.text}>2020跨年日出秘境步道...</div>
-              <div className={classes.time}>2019-12-11</div>
-            </SwiperSlide>
+            {articles.map((articles) => (
+              <SwiperSlide>
+                <Link
+                  to={`/columnPage/${articles.id}`}
+                  className={classes.linkstlye}
+                >
+                  <img src={articles.image} className={classes.Img} />
+                  <div className={classes.text}>{articles.title}</div>
+                  <div className={classes.time}>{articles.created_at}</div>
+                </Link>
+              </SwiperSlide>
+           
+            ))}
           </Swiper>
 
           <Grid className={classes.tangle} />

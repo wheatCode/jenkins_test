@@ -53,23 +53,23 @@ const obj = {
   "family.png": family,
   "forest.png": forest,
   "sakura.png": sakura,
+
 };
 
 function SearchQuick(props) {
   const classes = useStyles();
-  const kw = props.match.params.id;
-  console.log(kw);
+  const id = props.match.params.id;
   //搜尋結果hook
   const [searchQuick, setSearchQuick] = useState([]);
 
-  const searchApi = async (kw) => {
-    await api.get("/api/collection/" + kw).then((res) => {
+  const searchApi = async (id) => {
+    await api.get("/api/collection/" + id).then((res) => {
       setSearchQuick(res.data);
     });
   };
   useEffect(() => {
-    searchApi(kw);
-  }, [kw]);
+    searchApi(id);
+  }, [id]);
 
   return (
     <>
