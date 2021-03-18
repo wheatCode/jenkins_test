@@ -166,7 +166,11 @@ function EditAccount(props) {
             color="inherit"
             edge="end"
             onClick={() => {
-              if (!validations.nameValidation && !validations.genderValidation && !validations.phoneValidation) {
+              if (
+                !validations.nameValidation &&
+                !validations.genderValidation &&
+                !validations.phoneValidation
+              ) {
                 console.log("yay");
                 collectData();
               }
@@ -196,9 +200,7 @@ function EditAccount(props) {
             <div className={classes.avatarContainer}>
               <Avatar
                 // alt="Profile Picture"
-                src={
-                  croppedImage ? croppedImage : personalInfo.image
-                }
+                src={croppedImage ? croppedImage : personalInfo.image}
                 className={classes.avatar}
               />
               <div
@@ -301,36 +303,40 @@ function EditAccount(props) {
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <NativeSelect
-                labelId="country-code"
-                id="country-code"
-                style={{ width: "30%" }}
-                className={classes.textfield}
-                inputProps={{}}
-              >
-                {countryInfo.map(info => (
-                  <option
-                    key={info.countryCode + info.countryName}
-                    value={info.phoneCode}
-                  >
-                    {info.phoneCode}
-                  </option>
-                ))}
-              </NativeSelect>
-              <TextField
-                id="standard-basic"
-                placeholder="手機"
-                error={validations.phoneValidation ? true : false}
-                helperText={
-                  validations.phoneValidation ? validations.phoneValidation : ""
-                }
-                style={{ width: "70%" }}
-                className={classes.textfield_phone}
-                onChange={handleTelChange}
-                inputProps={{
-                  value: personalInfo.phone_number
-                }}
-              />
+              <div className={classes.textfield}>
+                <NativeSelect
+                  labelId="country-code"
+                  id="country-code"
+                  style={{ width: "30%" }}
+                  className={classes.textfield}
+                  inputProps={{}}
+                >
+                  {countryInfo.map(info => (
+                    <option
+                      key={info.countryCode + info.countryName}
+                      value={info.phoneCode}
+                    >
+                      {info.phoneCode}
+                    </option>
+                  ))}
+                </NativeSelect>
+                <TextField
+                  id="standard-basic"
+                  placeholder="手機"
+                  error={validations.phoneValidation ? true : false}
+                  helperText={
+                    validations.phoneValidation
+                      ? validations.phoneValidation
+                      : ""
+                  }
+                  style={{ width: "70%" }}
+                  className={classes.textfield_phone}
+                  onChange={handleTelChange}
+                  inputProps={{
+                    value: personalInfo.phone_number
+                  }}
+                />
+              </div>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="body1" className={classes.textLabel}>

@@ -184,9 +184,7 @@ function PersonalPage(props) {
               <Avatar
                 // alt="Profile Picture"
                 src={
-                  croppedImage == null
-                    ? Logix.personalInfo.image
-                    : croppedImage
+                  croppedImage == null ? Logix.personalInfo.image : croppedImage
                 }
                 className={classes.avatar}
               />
@@ -305,34 +303,36 @@ function PersonalPage(props) {
               </Typography>
             </Grid>
             <Grid item xs={9}>
-              <Select
-                labelId="country-code"
-                id="country-code"
-                style={{ width: "30%" }}
-                className={classes.textfield}
-                inputProps={{
-                  readOnly: true
-                }}
-              >
-                {countryInfo.map(info => (
-                  <MenuItem
-                    key={info.countryCode + info.countryName}
-                    value={info.phoneCode}
-                  >
-                    {info.phoneCode}
-                  </MenuItem>
-                ))}
-              </Select>
-              <TextField
-                id="standard-basic"
-                placeholder="手機"
-                style={{ width: "70%" }}
-                className={classes.textfield_phone}
-                inputProps={{
-                  value: Logix.personalInfo.phone_number,
-                  readOnly: true
-                }}
-              />
+              <div className={classes.textfield}>
+                <Select
+                  labelId="country-code"
+                  id="country-code"
+                  style={{ width: "30%" }}
+                  className={classes.textfield}
+                  inputProps={{
+                    readOnly: true
+                  }}
+                >
+                  {countryInfo.map(info => (
+                    <MenuItem
+                      key={info.countryCode + info.countryName}
+                      value={info.phoneCode}
+                    >
+                      {info.phoneCode}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <TextField
+                  id="standard-basic"
+                  placeholder="手機"
+                  style={{ width: "70%" }}
+                  className={classes.textfield_phone}
+                  inputProps={{
+                    value: Logix.personalInfo.phone_number,
+                    readOnly: true
+                  }}
+                />
+              </div>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="body1" className={classes.textLabel}>
