@@ -8,7 +8,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { BsFillLockFill } from "react-icons/bs";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -94,24 +94,40 @@ const useStyles = makeStyles({
     marginLeft: "15%",
   },
 });
-const axios = window.axios;
+const demoapi = axios.create({
+  //測試 api
+  baseURL: "http://0ae14a46960c.ngrok.io",
+  headers: {
+    "X-Secure-Code": "12345678",
+  },
+});
+
 export default function Sidebar(props) {
   const classes = useStyles();
-
+  const [user, setuser] = useState([]);
   const [state, setState] = useState(false);
   const [anchor] = useState("left");
-
+  const id ="2";
+  const userApi = async (id) => {
+    await demoapi.get("/api/user/"+id).then((res) => {
+      setuser(res.data);
+    });
+  };
   const toggleDrawer = (open) => (event) => {
     if (event.type === "keydown") return;
     setState(open);
   };
+  useEffect(() => {
+    userApi(id);
+  }, [id]);
 
   return (
     <>
       <div className={classes.list} role="presentation">
-        <Avatar className={classes.avater} src={usericon} />
-        <Grid className={classes.name}>金勇敢</Grid>
-        <Grid className={classes.mail}>monono@gamil.com</Grid>
+        <Avatar className={classes.avater} src={user.image} />
+        <Grid className={classes.name}>{user.name}</Grid>
+    
+        <Grid className={classes.mail}>{user.email}</Grid>
         <Grid className={classes.tangle} />
 
         <Grid>
