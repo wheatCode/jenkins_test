@@ -5,15 +5,45 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import getty from "../../asset/img/gettyimages-1197938495-2048x2048.jpg";
 
 import axios from "axios";
 import TrailList from "../../components/Lists/TrailList";
 import BackArrow from "../../components/TopBar/BackArrow";
 import { Link } from "react-router-dom";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+
+import ShareIcon from "@material-ui/icons/Share";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: "100%",
+    fontFamily: "NotoSansCJKtc",
+  },
+  backArrow: {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    display: "block",
+    width: "40px",
+    height: "40px",
+  },
+  favoriteIcon: {
+    width: "40px",
+    height: "40px",
+    position: "absolute",
+    top: "0",
+    right: "20%",
+    display: "block",
+    color:"#ffffff",
+  },
+  shareIcon: {
+    width: "40px",
+    height: "40px",
+    position: "absolute",
+    top: "0",
+    right: "0",
+    display: "block",
+    color:"#ffffff",
   },
   bar: {
     height: "56px",
@@ -21,39 +51,37 @@ const useStyles = makeStyles((theme) => ({
   },
   Img: {
     width: "100%",
-    height: "176px",
+    height: "179px",
   },
   title: {
-    width: "100%",
     height: "36px",
-    fontFamily: "NotoSansCJKtc",
+    textIndent: "5%",
     fontSize: "22px",
     fontWeight: "bold",
     lineHeight: "1.64",
     letterSpacing: "0.46px",
-    margin: "24px 208px 16px 16px",
+
     color: "#232323",
   },
   text: {
     height: "84px",
-    margin: "16 16",
-    fontFamily: "NotoSansCJKtc",
+    margin: "16px 16px 24px",
     fontSize: "14px",
+
     lineHeight: "1.5",
     letterSpacing: "0.5px",
     color: "#232323",
   },
   background: {
-    width: "100",
+    margin: "24px 16px",
     height: "1px",
     backgroundColor: "rgba(0, 0, 0, 0.12)",
-    margin: "16px",
   },
   textlist: {
     width: "74px",
     height: "27px",
-    margin: "22",
-    fontFamily: "NotoSansCJKtc",
+    width: "100%",
+    textIndent: "5%",
     fontSize: "18px",
     fontWeight: "bold",
   },
@@ -69,54 +97,73 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const api = axios.create({
+  //heroku
   baseURL: "https://go-hiking-backend-laravel.herokuapp.com/",
   headers: {
     "X-Secure-Code": "12345678",
   },
 });
+const demoapi = axios.create({
+  //測試 api
+  baseURL: "http://0ae14a46960c.ngrok.io",
+  headers: {
+    "X-Secure-Code": "12345678",
+  },
+});
 
-function Column() {
+function Column(props) {
   const classes = useStyles();
-  const [searchResult, setSearchResult] = useState([]);
-  const collectionData = async () => {
-    const Data = await api.get("api/trail?filters=title:步道");
-    setSearchResult(Data.data);
-  };
-  useEffect(() => {
-    collectionData();
-  }, []);
+  const [trail, setTrail] = useState([]);
+  const [article, setArticle] = useState([]);
+  const id = props.match.params.id;
 
+  console.log(id);
+
+  const articleApi = async (id) => {
+    //搜尋文章頁面api
+    await demoapi.get("/api/article/" + id).then((res) => {
+      setArticle(res.data);
+      setTrail(res.data.trails);
+    });
+  };
+
+  useEffect(() => {
+    articleApi(id);
+  }, [id]);
+  console.log(article);
   return (
     <>
       <div className={classes.root}>
-        <img src={getty} className={classes.Img} />
+        <ThemeProvider>
+          <img src={article.image} className={classes.Img} />
 
-        <Grid item xs={12}>
-          <Link to="/home">
-            <BackArrow />
-          </Link>
-          <div className={classes.title}>2020跨年迎接曙光</div>
-        </Grid>
+          <Grid item xs={12} className={classes.backArrow}>
+            <Link to="/home">
+              <BackArrow />
+            </Link>
+          </Grid>
+          <Grid className={classes.favoriteIcon}>
+            <FavoriteIcon />
+          </Grid>
+          <Grid className={classes.shareIcon}>
+            <ShareIcon />
+          </Grid>
+          <div className={classes.title}>{article.title}</div>
+          <Grid item xs={12}>
+            <div className={classes.text}>{article.content}</div>
+          </Grid>
 
-        <Grid item xs={12}>
-          <div className={classes.text}>
-            回首2020年，疫情顛覆常日運轉的軌道，
-            對不少人也許猶如世界末日的感受， 永遠會在生命裡留下記號吧，
-            日子無論或好或壞時間依然向前滾動，
-            新的一年，在晨曦中迎接第一道曙光， 作為許下祈願的儀式。
-          </div>
-        </Grid>
-
-        <Grid item xs={12}>
-          <div className={classes.background} />
-        </Grid>
-        <Grid item xs={12} container>
-          <div className={classes.textlist}>步道推薦</div>
-          <div className={classes.trailList}>
-            {/* 步道list component */}
-            <TrailList data={searchResult} />
-          </div>
-        </Grid>
+          <Grid item xs={12}>
+            <div className={classes.background} />
+          </Grid>
+          <Grid item xs={12} container>
+            <div className={classes.textlist}>步道推薦</div>
+            <div className={classes.trailList}>
+              {/* 步道list component */}
+              <TrailList data={trail} />
+            </div>
+          </Grid>
+        </ThemeProvider>
       </div>
     </>
   );
