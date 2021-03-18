@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   avater: {
     height: "64px",
     width: "64px",
-    marginTop: "5%",
+    marginTop: "16px",
     margin: "0 42px 16px 16px",
   },
   name: {
@@ -49,6 +49,7 @@ const useStyles = makeStyles({
     fontSize: "16px",
     fontWeight: "bold",
     lineHeight: 1.5,
+    height:"48px",
     "&:hover": {
       backgroundColor: "rgba(0, 208, 76, 0.05)",
       color: "#00d04c",
@@ -76,11 +77,12 @@ const useStyles = makeStyles({
   version: {
     fontSize: "14px",
     fontWeight: "bold",
-
+    textAlign:"center",
     marginLeft: "15%",
     width: "323px",
   },
   versiont: {
+    
     marginLeft: "50%",
     textAlign: "right",
 
@@ -96,7 +98,7 @@ const useStyles = makeStyles({
 });
 const demoapi = axios.create({
   //測試 api
-  baseURL: "http://0ae14a46960c.ngrok.io",
+  baseURL: "http://09da54f0b81b.ngrok.io",
   headers: {
     "X-Secure-Code": "12345678",
   },
@@ -130,10 +132,11 @@ export default function Sidebar(props) {
         <Grid className={classes.mail}>{user.email}</Grid>
         <Grid className={classes.tangle} />
 
-        <Grid>
+        <Grid >
           <Button size="large" className={classes.scrim}>
-            <BsFillPersonFill />
-
+            
+            <BsFillPersonFill  />
+  
             <span className={classes.text}>個人檔案</span>
           </Button>
 

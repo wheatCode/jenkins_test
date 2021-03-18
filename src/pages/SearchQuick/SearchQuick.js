@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   list: {
     padding: "5%",
   },
+  backArrow:{
+    color:"#232323",
+  },
 }));
 
 const api = axios.create({
@@ -53,7 +56,6 @@ const obj = {
   "family.png": family,
   "forest.png": forest,
   "sakura.png": sakura,
-
 };
 
 function SearchQuick(props) {
@@ -75,8 +77,8 @@ function SearchQuick(props) {
     <>
       <div className={classes.root}>
         <Grid item xs={12} className={classes.mask}>
-          <Grid>
-            <Link to="/searchPage">
+          <Grid > 
+            <Link to="/searchPage" className={classes.backArrow}> 
               <BackArrow />
             </Link>
           </Grid>

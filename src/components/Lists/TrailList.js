@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(2, 0),
   },
+  background: {
+    height: "1px",
+    backgroundColor: "rgba(0, 0, 0, 0.12)",
+  },
 }));
 
 const TrailList = (props) => {
@@ -71,9 +75,7 @@ const TrailList = (props) => {
               <Grid item xs={12} className={classes.distance}>
                 全程約{trail.distance}公里
               </Grid>
-              <Grid item xs={12}>
-                <Divider></Divider>
-              </Grid>
+              <Grid item xs={12} />
             </Grid>
           </Grid>
         ))}
