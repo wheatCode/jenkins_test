@@ -39,7 +39,7 @@ const routes = [
   <Route path="/aboutUs" exact component={AboutUs} />,
   <Route path="/Home" exact component={Home} />,
   <Route path="/about" exact component={About} />,
-  <Route path="/columnPage" exact component={ColumnPage} />,
+  <Route path="/columnPage/:id" exact component={ColumnPage} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   //<AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
