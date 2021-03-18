@@ -108,7 +108,7 @@ const PersonalPageLogic = (info = null) => {
         phone_number: data.phone_number,
         birth: data.birth,
         // profile_photo_url: data.croppedImage ? data.croppedImage : data.image,
-        profile_photo_url: "https://i.imgur.com/X7whEnq.jpg",
+        image: "https://i.imgur.com/X7whEnq.jpg",
         county: data.county
       })
       .then(res => {

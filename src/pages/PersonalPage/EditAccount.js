@@ -197,7 +197,7 @@ function EditAccount(props) {
               <Avatar
                 // alt="Profile Picture"
                 src={
-                  croppedImage ? croppedImage : personalInfo.profile_photo_url
+                  croppedImage ? croppedImage : personalInfo.image
                 }
                 className={classes.avatar}
               />

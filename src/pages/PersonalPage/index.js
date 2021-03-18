@@ -185,7 +185,7 @@ function PersonalPage(props) {
                 // alt="Profile Picture"
                 src={
                   croppedImage == null
-                    ? Logix.personalInfo.profile_photo_url
+                    ? Logix.personalInfo.image
                     : croppedImage
                 }
                 className={classes.avatar}
