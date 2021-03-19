@@ -37,7 +37,7 @@ const lightTheme = createMuiTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#3c5754",
+      main: "#00d04c",
     },
   },
 });
@@ -48,13 +48,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     width: "100%",
   },
-
+  appbar: {
+    backgroundColor: "#3c5754",
+    color: "#ffffff",
+  },
   menuButton: {
     marginRight: theme.spacing(3),
   },
   rectangle: {
     height: "230px",
-    maxWidth:"100%",
+    maxWidth: "100%",
   },
   title: {
     flexGrow: 1,
@@ -62,9 +65,12 @@ const useStyles = makeStyles((theme) => ({
   marquee: {
     height: "100%",
     width: "259px",
+    
     backgroundColor: "#000000",
   },
   matitle: {
+    letterSpacing:"0.46px",
+    margin: "0 69px 8px 0",
     color: "#ffffff",
     fontSize: "22px",
     fontWeight: "bold",
@@ -77,15 +83,27 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#00d04c",
   },
   maimg: {
-   
     height: "230px",
   },
   swiper: {
+
+    
     backgroundColor: "#fffff",
-    height: "112px",    
+    height: "112px",
     textAlign: "center",
     margin: "16px 0 0",
-    padding: "8px 0 8px 16px",
+
+  },
+  collection:{
+    margin: "0 0 7px",
+    padding:"16px",
+    textAlign:"center", 
+  },
+  icontext:{
+    margin: "7px 9px 0 10px",
+    textAlign:"center",
+    width:"29px",
+    fontWeight:"bold",
   },
 
   iconImg: {
@@ -100,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "22px",
     color: "#232323",
   },
-  swiper2: {},
+  
   linkstlye: {
     color: "#000",
     textDecoration: "none",
@@ -123,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Img: {
     height: "96px",
+    width:"174px",
   },
   tangle: {
     width: "100%",
@@ -138,7 +157,7 @@ const api = axios.create({
 });
 const demoapi = axios.create({
   //測試 api
-  baseURL: "http://0ae14a46960c.ngrok.io",
+  baseURL: "http://09da54f0b81b.ngrok.io",
   headers: {
     "X-Secure-Code": "12345678",
   },
@@ -187,7 +206,7 @@ export default function HomePage() {
     <>
       <div className={classes.root}>
         <ThemeProvider theme={lightTheme}>
-          <AppBar position="static">
+          <AppBar position="static" className={classes.appbar}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -209,6 +228,7 @@ export default function HomePage() {
                 Go Hiking
               </Typography>
               <Button color="inherit">
+                
                 <SearchIcon />
               </Button>
             </Toolbar>
@@ -216,8 +236,8 @@ export default function HomePage() {
 
           <Swiper
             className={classes.rectangle}
-            spaceBetween={100}//side 之間距離
-            slidesPerView={2}//容器能够同时显示的slides数量
+            spaceBetween={100} //side 之間距離
+            slidesPerView={2} //容器能够同时显示的slides数量
             mousewheel={true}
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
@@ -250,7 +270,7 @@ export default function HomePage() {
             loop={false}
           >
             {collection.map((collection) => (
-              <SwiperSlide>
+              <SwiperSlide  className={classes.collection} >
                 <Link
                   to={`/searchQuick/${collection.id}`}
                   className={classes.linkstlye}
@@ -270,8 +290,8 @@ export default function HomePage() {
           <Grid className={classes.retitle}>行程推薦</Grid>
           <Swiper
             className={classes.swiper2}
-            spaceBetween={110}
-            slidesPerView={3}
+            spaceBetween={16}
+            slidesPerView={10}
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
@@ -289,7 +309,6 @@ export default function HomePage() {
                   <div className={classes.time}>{articles.created_at}</div>
                 </Link>
               </SwiperSlide>
-           
             ))}
           </Swiper>
 

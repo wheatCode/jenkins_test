@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 function Navigation() {
   
   const classes = useStyles(); 
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
 
   return(
     

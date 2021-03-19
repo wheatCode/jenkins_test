@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "0",
     left: "0",
+    color:"#fff",
     display: "block",
     width: "40px",
     height: "40px",
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     top: "0",
     right: "20%",
     display: "block",
-    color:"#ffffff",
+    color: "#ffffff",
   },
   shareIcon: {
     width: "40px",
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     top: "0",
     right: "0",
     display: "block",
-    color:"#ffffff",
+    color: "#ffffff",
   },
   bar: {
     height: "56px",
@@ -105,7 +106,7 @@ const api = axios.create({
 });
 const demoapi = axios.create({
   //測試 api
-  baseURL: "http://0ae14a46960c.ngrok.io",
+  baseURL: "http://09da54f0b81b.ngrok.io",
   headers: {
     "X-Secure-Code": "12345678",
   },
@@ -137,8 +138,8 @@ function Column(props) {
         <ThemeProvider>
           <img src={article.image} className={classes.Img} />
 
-          <Grid item xs={12} className={classes.backArrow}>
-            <Link to="/home">
+          <Grid item xs={12} >
+            <Link to="/home" className={classes.backArrow} >
               <BackArrow />
             </Link>
           </Grid>
