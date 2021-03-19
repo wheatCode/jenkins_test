@@ -15,7 +15,7 @@ const config = {
     defaultLocale: parseLanguages(['en', 'de', 'ru'], 'en'),
     onError: (e) => {
       //console.warn(e)
-      return 
+      return
     },
   },
   menu: {
@@ -23,7 +23,7 @@ const config = {
   },
   theme: {
     themes,
-    defaultThemeID: 'default',
+    defaultThemeID: 'red',
     defaultIsDarkMode: false,
     defaultIsRTL: false //change this to true for Right to Left Language support
   },
