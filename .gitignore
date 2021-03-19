@@ -26,3 +26,5 @@ firebase-debug.log*
 
 # cache
 .eslintcache
+
+package-lock.json
