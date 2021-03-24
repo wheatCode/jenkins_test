@@ -10,3 +10,4 @@ RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN apt-get install nginx -y
 RUN sudo npm install
+RUN chmod -R 755 /var/log/nginx;
