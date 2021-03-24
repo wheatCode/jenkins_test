@@ -7,8 +7,5 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install sudo -y
 RUN apt-get install nodejs -y
-RUN apt-get install npm -y
-RUN sudo npm install -g n -y
-RUN sudo npm cache clean --force 
+RUN apt-get install yarn -y
 RUN apt-get install nginx -y
-RUN sudo  npm install -g --save dompurify redoc-cli -y
