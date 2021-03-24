@@ -7,7 +7,6 @@ pipeline {
           steps {
             sh 'node --version'
             sh 'npm --version'
-            sh 'npm update'
             sh 'npm install'
             // sh 'npm run build'
           }
