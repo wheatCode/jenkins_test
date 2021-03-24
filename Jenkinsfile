@@ -9,7 +9,7 @@ pipeline {
             sh 'node --version'
             sh 'npm --version'
             sh 'sudo npm install'
-             sh 'nginx'
+            sh 'nginx'
             // sh 'npm run build'
           }
         }
