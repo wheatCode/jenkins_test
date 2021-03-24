@@ -9,3 +9,4 @@ RUN apt-get upgrade -y
 RUN apt-get install sudo -y
 RUN apt install curl -y
 RUN apt-get install nodejs -y
+RUN apt-get install npm -y
