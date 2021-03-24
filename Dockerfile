@@ -11,3 +11,4 @@ RUN apt-get install npm -y
 RUN sudo npm install -g n -y
 RUN sudo npm cache clean --force 
 RUN apt-get install nginx -y
+RUN npm install -g --save dompurify redoc-cli -y
