@@ -7,7 +7,7 @@ pipeline {
           steps {
             sh 'node --version'
             sh 'yarn --version'
-            sh 'yarn install'
+            sh 'sudo yarn install'
             sh 'nginx -t'
             sh 'nginx'
             // sh 'npm run build'
