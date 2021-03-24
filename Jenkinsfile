@@ -5,10 +5,10 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            sh 'nginx -t'
             sh 'node --version'
             sh 'npm --version'
             sh 'sudo npm install'
+            sh 'sudo nginx -t'
             sh 'nginx'
             // sh 'npm run build'
           }
