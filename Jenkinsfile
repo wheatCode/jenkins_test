@@ -6,7 +6,7 @@ pipeline {
         stage("Build") {
           steps {
             sh 'node --version'
-            sh 'yarn --version'
+            sh 'npm --version'
             sh 'nginx -t'
             sh 'nginx'
             // sh 'npm run build'
