@@ -5,9 +5,9 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            sh 'node --version'
-            sh 'npm --version'
-            sh 'nginx -t'
+            // sh 'node --version'
+            // sh 'npm --version'
+            sh 'sudo nginx -t'
             sh 'nginx'
             // sh 'npm run build'
           }
