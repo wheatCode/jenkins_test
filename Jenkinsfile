@@ -7,7 +7,7 @@ pipeline {
           steps {
             // sh 'node --version'
             // sh 'npm --version'
-            sh 'sudo nginx -t'
+            sh 'pwd'
             sh 'nginx'
             // sh 'npm run build'
           }
