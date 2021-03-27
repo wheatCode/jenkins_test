@@ -7,8 +7,7 @@ pipeline {
           steps {
             // sh 'node --version'
             // sh 'npm --version'
-            sh 'pwd'
-            sh 'nginx'
+            sh 'ls'
             // sh 'npm run build'
           }
         }
