@@ -10,4 +10,3 @@ RUN apt-get install nginx -y
 RUN nginx
 COPY . /var/www/
 WORKDIR /var/www/
-RUN sudo npm install
