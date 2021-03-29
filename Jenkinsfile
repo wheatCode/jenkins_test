@@ -8,7 +8,6 @@ pipeline {
             sh 'node --version'
             sh 'npm --version'
             sh 'npm cache clean --force'
-            sh "npm install"
             sh 'ls'
             sh 'npm run build'
           }
