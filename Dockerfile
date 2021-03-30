@@ -10,3 +10,5 @@ RUN npm install -g --save dompurify@2.0.8 redoc-cli
 RUN npm update
 COPY . /app/
 WORKDIR /app/
+VOLUME . /app/
+CMD ["npm" , "install" ]
