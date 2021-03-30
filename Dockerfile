@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+VOLUME vol1
 COPY . /app/
 WORKDIR /app/
 ENV TZ=America/Los_Angeles
@@ -8,4 +9,3 @@ RUN apt-get upgrade -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN npm install
-VOLUME vol1
