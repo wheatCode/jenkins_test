@@ -7,6 +7,7 @@ RUN apt-get install sudo -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN apt-get install nginx -y
+RUN npm install -g --save dompurify@2.0.8 redoc-cli
 RUN nginx
 COPY . /var/www/
 WORKDIR /var/www/
