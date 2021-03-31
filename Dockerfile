@@ -1,6 +1,5 @@
 FROM ubuntu:latest
 RUN mkdir /data
-VOLUME /data
 COPY . /app
 WORKDIR /app
 ENV TZ=America/Los_Angeles
