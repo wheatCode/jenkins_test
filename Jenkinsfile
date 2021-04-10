@@ -4,6 +4,9 @@ pipeline {
       filename 'Dockerfile'
     } 
   }
+  environment {
+      npm_config_cache = 'npm-cache'
+  }
   stages { 
         stage("Build") {
           steps {
@@ -14,7 +17,7 @@ pipeline {
             sh 'node --version'
             sh 'npm --version'
             sh 'ls'
-            sh 'npm install --unsafe-perm=true --allow-root'
+            sh 'npm install'
           }
         }
         stage('Test') {
