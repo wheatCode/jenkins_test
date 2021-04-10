@@ -8,11 +8,9 @@ pipeline {
         stage("Build") {
           steps {
             sh 'node --version'
-            sh 'npm --version'
-            sh 'npm cache clean --force'
+            sh 'yarn --version'
             sh 'ls'
-            sh 'npm install'
-            sh 'npm run build'
+            sh 'yarn install'
           }
         }
         stage('Test') {
