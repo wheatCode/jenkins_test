@@ -8,11 +8,11 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install sudo -y
 RUN apt-get install curl -y
-RUN apt-get purge cmdtest -y
+# RUN apt-get purge cmdtest -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN npm install yarn -g -y
-RUN sudo chown -R $USER /Users/nexus/.yarn-cache
+RUN sudo chown -R  deploy /var/lib/.config
 # RUN yarn config delete https-proxy
 # RUN yarn config delete proxy
 RUN ls
