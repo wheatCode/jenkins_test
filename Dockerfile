@@ -11,5 +11,6 @@ RUN apt-get install curl -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN npm install yarn -g -y
-RUN sudo yarn add react-router-hash-link
+RUN sudo chown -R $USER:$GROUP ~/.yarn
+RUN sudo chown -R $USER:$GROUP ~/.config
 RUN ls
