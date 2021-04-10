@@ -9,7 +9,6 @@ RUN apt-get upgrade -y
 RUN apt-get install curl -y
 RUN apt-get purge cmdtest -y
 RUN apt-get install nodejs -y
-RUN apt-get install gnupg2 -y 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN apt-get install yarn -y
+RUN apt-get install npm -y
+RUN npm install yarn -g -y
 RUN ls
