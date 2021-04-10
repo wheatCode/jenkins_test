@@ -7,6 +7,7 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
+            sh 'chown -R $USER /Users/nexus/.yarn-cache'
             sh 'yarn config set registry http://registry.npm.taobao.org/'
             sh 'yarn config set registry https://registry.npmjs.org/'
             sh 'node --version'
