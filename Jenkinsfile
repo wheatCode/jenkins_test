@@ -14,7 +14,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'ls'
-            sh 'npm run start'
+            sh 'npm run build'
           }
         }
         stage('Test') {
