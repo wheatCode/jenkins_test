@@ -11,6 +11,6 @@ RUN apt-get purge cmdtest -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN npm install yarn -g -y
-RUN npm config rm proxy
-RUN npm config rm https-proxy
+RUN yarn config delete https-proxy
+RUN yarn config delete proxy
 RUN ls
