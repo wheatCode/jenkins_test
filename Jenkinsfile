@@ -14,7 +14,7 @@ pipeline {
             sh 'node --version'
             sh 'npm --version'
             sh 'ls'
-            sh 'npm install'
+            sh 'npm install --unsafe-perm=true --allow-root'
           }
         }
         stage('Test') {
