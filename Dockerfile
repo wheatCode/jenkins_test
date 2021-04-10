@@ -8,10 +8,8 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install sudo -y
 RUN apt-get install curl -y
-# RUN apt-get purge cmdtest -y
 RUN apt-get install nodejs -y
 RUN apt-get install npm -y
 RUN npm install yarn -g -y
-# RUN yarn config delete https-proxy
-# RUN yarn config delete proxy
+RUN sudo yarn add react-router-hash-link
 RUN ls

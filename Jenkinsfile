@@ -7,7 +7,6 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            sh 'chown -R root /var/lib/jenkins/.config'
             sh 'yarn config set registry http://registry.npm.taobao.org/'
             sh 'yarn config set registry https://registry.npmjs.org/'
             sh 'node --version'
