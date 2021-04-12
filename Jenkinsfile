@@ -25,9 +25,13 @@ pipeline {
         stage('Deploy') {
           steps {
               echo 'Deploy'
-              archiveArtifacts artifacts: '*', fingerprint: true
-              sh 'ls -al'
           }
         }
+  }
+  post {
+      always {
+          archiveArtifacts artifacts: '*', fingerprint: true
+          // junit 'build/reports/**/*.xml'
+      }
   }
 }
