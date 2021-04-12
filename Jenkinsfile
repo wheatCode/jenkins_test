@@ -26,6 +26,7 @@ pipeline {
           steps {
               echo 'Deploy'
               archiveArtifacts artifacts: '*', fingerprint: true
+              sh 'ls -al'
           }
         }
   }
