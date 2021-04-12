@@ -8,13 +8,9 @@ pipeline {
       npm_config_cache = 'npm-cache'
   }
   stages { 
-        post {
-          always {
-              archiveArtifacts artifacts: 'generatedFile.jar', onlyIfSuccessful: true
-          }
-        }
         stage("Build") {
           steps {
+            archiveArtifacts artifacts: 'generatedFile.jar', onlyIfSuccessful: true
             sh 'node --version'
             sh 'npm --version'
             // sh 'npm install'
