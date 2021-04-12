@@ -10,7 +10,6 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            archiveArtifacts artifacts: 'generatedFile.jar', onlyIfSuccessful: true
             sh 'node --version'
             sh 'npm --version'
             // sh 'npm install'
