@@ -10,7 +10,6 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            archiveArtifacts artifacts: '*', fingerprint: true, onlyIfSuccessful: true
             sh 'node --version'
             sh 'npm --version'
             // sh 'npm install'
@@ -26,13 +25,8 @@ pipeline {
         stage('Deploy') {
           steps {
               echo 'Deploy'
+              archiveArtifacts artifacts: '*', fingerprint: true
           }
         }
-  }
-  post {
-      always {
-          archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-          junit 'build/reports/**/*.xml'
-      }
   }
 }
