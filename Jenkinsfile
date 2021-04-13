@@ -10,7 +10,7 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            archiveArtifacts artifacts: '*', fingerprint: true
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             sh 'node --version'
             sh 'npm --version'
             // sh 'npm install'
