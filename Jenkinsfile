@@ -10,12 +10,12 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            archiveArtifacts artifacts: '*.* jar', fingerprint: true
+            // archiveArtifacts artifacts: '*.* jar', fingerprint: true
             sh 'node --version'
             sh 'npm --version'
-            // sh 'npm install'
+            sh 'npm install'
+            sh 'npm run build'
             sh 'ls -al'
-            // sh 'npm run build'
           }
         }
         stage('Test') {
@@ -26,6 +26,8 @@ pipeline {
         stage('Deploy') {
           steps {
               echo 'Deploy'
+              archive 'app/build/**'
+              sh 'ls -al'
           }
         }
   }
