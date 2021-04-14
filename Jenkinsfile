@@ -15,9 +15,9 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            zip zipFile: 'fontend.zip', archive: false, dir: '/'
+            zip zipFile: 'fontend.zip', archive: true, dir: '/app'
             sh 'ls -al'
-          }
+          }${GIT_BRANCH}
         }
         stage('Test') {
           steps {
