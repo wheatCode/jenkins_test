@@ -15,7 +15,9 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            zip zipFile: '${GIT_BRANCH}.zip', archive: true, dir: '/app'
+            script{
+              zip zipFile: '${GIT_BRANCH}.zip', archive: true, dir: '/app'
+            }
             sh 'ls -al'
           }
         }
