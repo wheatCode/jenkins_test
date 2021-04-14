@@ -15,7 +15,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            archiveArtifacts '/build/*'
+            archiveArtifacts '/build/*.*'
             sh 'ls -al'
           }
         }
