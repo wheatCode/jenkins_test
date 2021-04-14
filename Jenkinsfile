@@ -15,7 +15,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            zip zipFile: 'fontend.zip', archive: false, dir: 'archive'
+            zip zipFile: 'fontend.zip', archive: false, dir: '/'
             sh 'ls -al'
           }
         }
