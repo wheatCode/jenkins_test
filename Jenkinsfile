@@ -15,7 +15,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            archiveArtifacts '*.*'
+            zip zipFile: 'fontend.zip', archive: false, dir: 'archive'
             sh 'ls -al'
           }
         }
@@ -34,7 +34,7 @@ pipeline {
   }
   post {
       always {
-          archiveArtifacts artifacts: '*', fingerprint: true
+          archiveArtifacts artifacts: 'fontend.zip', fingerprint: true
       }
   }
 }
