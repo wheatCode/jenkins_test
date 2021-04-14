@@ -15,7 +15,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            archiveArtifacts 'Dockerfile'
+            archiveArtifacts '/build/*'
             sh 'ls -al'
           }
         }
@@ -32,10 +32,9 @@ pipeline {
           }
         }
   }
-  // post {
-  //     always {
-  //         archiveArtifacts artifacts: '*', fingerprint: true
-  //         // junit 'build/reports/**/*.xml'
-  //     }
-  // }
+  post {
+      always {
+          archiveArtifacts artifacts: '*', fingerprint: true
+      }
+  }
 }
