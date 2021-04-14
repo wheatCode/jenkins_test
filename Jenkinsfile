@@ -10,14 +10,11 @@ pipeline {
   stages { 
         stage("Build") {
           steps {
-            // archiveArtifacts artifacts: '*.* jar', fingerprint: true
             sh 'node --version'
             sh 'npm --version'
             sh 'npm install'
             sh 'npm run build'
-            script{
-              zip zipFile: 'frontend.zip', archive: true, dir: '/'
-            }
+            zip zipFile: 'frontend.zip', archive: true, dir: ''
             sh 'ls -al'
           }
         }
