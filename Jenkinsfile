@@ -16,7 +16,7 @@ pipeline {
             sh 'npm install'
             sh 'npm run build'
             script{
-              zip zipFile: '${GIT_BRANCH}.zip', archive: true, dir: '/'
+              zip zipFile: 'frontend.zip', archive: true, dir: '/'
             }
             sh 'ls -al'
           }
@@ -39,7 +39,7 @@ pipeline {
   }
   post {
       always {
-          archiveArtifacts artifacts: '${GIT_BRANCH}.zip', fingerprint: true
+          archiveArtifacts artifacts: 'frontend.zip', fingerprint: true
       }
   }
 }
