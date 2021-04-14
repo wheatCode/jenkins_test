@@ -29,14 +29,13 @@ pipeline {
         stage('Deploy') {
           steps {
               echo 'Deploy'
-              archive 'app/build/**'
               sh 'ls -al'
           }
         }
   }
   post {
       always {
-          archiveArtifacts artifacts: 'fontend.zip', fingerprint: true
+          archiveArtifacts artifacts: '${GIT_BRANCH}.zip', fingerprint: true
       }
   }
 }
