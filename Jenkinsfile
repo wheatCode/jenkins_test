@@ -18,7 +18,7 @@ pipeline {
     stage("Build") {
       steps {
         sh 'npm install'
-        sh 'CI='' npm run build'
+        sh 'CI="" npm run build'
         sh 'ls -al'
       }
     }
