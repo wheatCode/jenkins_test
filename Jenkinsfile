@@ -19,6 +19,9 @@ pipeline {
       steps {
         sh 'npm install'
         sh 'CI="" npm run build'
+        script{
+            zip zipFile: 'frontend.zip', archive: true, dir: ''
+          }
         sh 'ls -al'
       }
     }
