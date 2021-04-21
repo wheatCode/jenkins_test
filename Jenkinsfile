@@ -23,6 +23,9 @@ pipeline {
             zip zipFile: 'frontend.zip', archive: true, dir: ''
           }
         sh 'ls -al'
+        build job: 'go-hiking-web-delpoy-build', parameters: [
+        string(name: 'go-hiking-web-delpoy', value: env.NAME)
+        ], wait: false
       }
     }
     stage('Test') {
