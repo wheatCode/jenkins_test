@@ -12,6 +12,7 @@ pipeline {
       steps {
         sh 'node --version'
         sh 'npm --version'
+        sh 'rm -rf frontend-build.zip'
         sh 'rm -rf frontend.zip'
       }
     }
@@ -20,8 +21,8 @@ pipeline {
         sh 'npm install'
         sh 'CI="" npm run build'
         script{
-            zip zipFile: 'frontend-build.zip', archive: true, dir: '/build'
             zip zipFile: 'frontend.zip', archive: true, dir: ''
+            zip zipFile: 'frontend-build.zip', archive: true, dir: 'build'
           }
         sh 'ls -al'
       }
