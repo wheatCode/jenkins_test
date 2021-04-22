@@ -23,14 +23,18 @@ pipeline {
             zip zipFile: 'frontend.zip', archive: true, dir: ''
           }
         sh 'ls -al'
-        build job: 'go-hiking-web-delpoy-build', parameters: [
-        string(name: 'go-hiking-web-delpoy', value: env.NAME)
-        ], wait: false
       }
     }
     stage('Test') {
       steps {
           echo 'Testing'
+      }
+    } 
+    stage('Test') {
+      steps {
+          withAWS(credentials: 'AWS S3', region: 'ap-northeast-1') {
+            s3Upload acl: 'Private', bucket: 'monosparta-test', file: 'https://jenkins.monosparta.org/job/go-hiking-web-delpoy/lastSuccessfulBuild/artifact/frontend.zip',path:"Jenkins/frontend.zip"
+          }
       }
     } 
   }  
