@@ -20,6 +20,7 @@ pipeline {
         sh 'npm install'
         sh 'CI="" npm run build'
         script{
+            zip zipFile: 'frontend-build.zip', archive: true, dir: '/build'
             zip zipFile: 'frontend.zip', archive: true, dir: ''
           }
         sh 'ls -al'
@@ -33,7 +34,7 @@ pipeline {
     stage('Upload S3') {
       steps {
           withAWS(credentials: 'AWS_S3', region: 'ap-northeast-1') {
-            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: 'frontend.zip',path:"Jenkins/frontend.zip"
+            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: 'frontend-build.zip',path:"Jenkins/frontend-build.zip"
           }
       }
     } 
