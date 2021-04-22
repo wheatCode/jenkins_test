@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    dockerfile {
+      filename 'Dockerfile'
+    } 
+  }
   environment {
       npm_config_cache = 'npm-cache'
   }
