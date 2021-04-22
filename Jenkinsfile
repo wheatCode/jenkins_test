@@ -28,6 +28,7 @@ pipeline {
     // } 
     stage('Upload S3') {
       steps {
+          sh 'rm -rf frontend.zip'
           script{
             zip zipFile: 'frontend.zip', archive: true, dir: ''
           }
