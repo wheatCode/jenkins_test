@@ -20,8 +20,9 @@ pipeline {
       steps {
         sh 'npm install'
         sh 'CI= npm run build'
-        sh 'cd build'
-        sh 'ls -al'
+       dir("build") {
+          sh "pwd"
+        }
         script{
             zip zipFile: 'frontend.zip', archive: true, dir: ''
             zip zipFile: 'frontend-build.zip', archive: false, dir: 'build'
