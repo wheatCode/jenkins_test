@@ -19,7 +19,7 @@ pipeline {
     stage("Build") {
       steps {
         sh 'npm install'
-        sh 'CI="" npm run build'
+        sh 'npm run build'
         script{
             zip zipFile: 'frontend.zip', archive: true, dir: ''
             zip zipFile: 'frontend-build.zip', archive: false, dir: 'build/**/*.*'
