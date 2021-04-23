@@ -22,7 +22,7 @@ pipeline {
         sh 'npm run build'
         script{
             zip zipFile: 'frontend.zip', archive: true, dir: ''
-            zip zipFile: 'frontend-build.zip', archive: false, dir: 'build/**/*.*'
+            zip zipFile: 'frontend-build.zip', archive: false, dir: 'build'
           }
         sh 'ls -al'
       }
