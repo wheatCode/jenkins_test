@@ -6,7 +6,8 @@ pipeline {
   }
   environment {
       npm_config_cache = 'npm-cache'
-      build_version = 'v1.0.0'
+      build_version = 'v1.0.1'
+      build_previous_version = 'v1.0.0'
   }
   stages { 
     stage("Version") {
@@ -17,8 +18,8 @@ pipeline {
     }
     stage("Build") {
       steps {
-        sh "rm -rf frontend-${build_version}.zip"
-        sh "rm -rf frontend-build-${build_version}.zip"
+        sh "rm -rf frontend-${build_previous_version}.zip"
+        sh "rm -rf frontend-build-${build_previous_version}.zip"
         sh 'npm install'
         sh 'CI= npm run build'
         dir("html") {
