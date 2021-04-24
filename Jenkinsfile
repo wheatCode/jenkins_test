@@ -40,7 +40,8 @@ pipeline {
     stage('Upload S3') {
       steps {
           withAWS(credentials: 'AWS_S3', region: 'ap-northeast-1') {
-            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: "frontend-build-${build_version}.zip",path:"Jenkins/frontend-build-${build_version}.zip"
+            s3Delete bucket: 'monosparta-test', path:"Jenkins/frontend-build-${build_previous_version}.zip"
+            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: "frontend-build-${build_version}.zip", path:"Jenkins/frontend-build-${build_version}.zip"
           }
       }
     } 
