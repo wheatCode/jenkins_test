@@ -25,8 +25,8 @@ pipeline {
             sh "ls -al"
         }
         script{
-            zip zipFile: "frontend-$build_version\.zip", archive: true, dir: ''
-            zip zipFile: "frontend-build-$build_version\.zip", archive: false, dir: 'html'
+            zip zipFile: "frontend-${build_version}.zip", archive: true, dir: ''
+            zip zipFile: "frontend-build-${build_version}.zip", archive: false, dir: 'html'
           }
         sh 'ls -al'
       }
@@ -39,14 +39,14 @@ pipeline {
     stage('Upload S3') {
       steps {
           withAWS(credentials: 'AWS_S3', region: 'ap-northeast-1') {
-            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: "frontend-build-$build_version\.zip",path:"Jenkins/frontend-build-$build_version\.zip"
+            s3Upload acl: 'PublicRead', bucket: 'monosparta-test', file: "frontend-build-${build_version}.zip",path:"Jenkins/frontend-build-${build_version}.zip"
           }
       }
     } 
   }  
   post {
       always {
-          archiveArtifacts artifacts: "frontend-build-$build_version\.zip", fingerprint: true
+          archiveArtifacts artifacts: "frontend-build-${build_version}.zip", fingerprint: true
       }
   }
 }
