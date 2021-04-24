@@ -17,8 +17,8 @@ pipeline {
     }
     stage("Build") {
       steps {
-        sh 'rm -rf frontend-build.zip'
-        sh 'rm -rf frontend.zip'
+        sh "rm -rf frontend-${build_version}.zip"
+        sh "rm -rf frontend-build-${build_version}.zip"
         sh 'npm install'
         sh 'CI= npm run build'
         dir("html") {
