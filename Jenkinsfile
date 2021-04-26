@@ -16,6 +16,11 @@ pipeline {
         sh 'npm --version'
       }
     }
+    stage('Test') {
+      steps {
+          echo 'Testing'
+      }
+    } 
     stage("Build") {
       steps {
         sh "rm -rf frontend-${build_previous_version}.zip"
@@ -25,6 +30,7 @@ pipeline {
         dir("html") {
             sh "ls -al"
         }
+        sh "rm -rf node_modules"
         script{
             zip zipFile: "frontend-${build_version}.zip", archive: true, dir: ''
             zip zipFile: "frontend-build-${build_version}.zip", archive: false, dir: 'html'
@@ -32,11 +38,6 @@ pipeline {
         sh 'ls -al'
       }
     }
-    stage('Test') {
-      steps {
-          echo 'Testing'
-      }
-    } 
     stage('Upload S3') {
       steps {
           withAWS(credentials: 'AWS_S3', region: 'ap-northeast-1') {
